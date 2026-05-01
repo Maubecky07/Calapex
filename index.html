@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simracing Kalender (Beta)</title>
+
+<!-- Favicon / Lesezeichen Icon -->
+<link rel="icon" type="image/png" href="Icon_SK_Website.png">
+
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 body{margin:0;background:#0b0b0b;color:#fff;font-family:'Exo 2';overflow-x:hidden;}
@@ -110,7 +114,8 @@ details summary::-webkit-details-marker { display: none; }
                 <div class="patch-item">
                     <span class="patch-version">VERSION 2.0.1</span>
                     • <b>Mobile Optimierung:</b> Layout-Anpassungen für Smartphones (Responsiveness).<br>
-                    • <b>UI-Fix:</b> Modal-Fenster und Tabellen überschneiden sich nicht mehr auf kleinen Bildschirmen.
+                    • <b>UI-Fix:</b> Modal-Fenster und Tabellen überschneiden sich nicht mehr auf kleinen Bildschirmen.<br>
+                    • <b>Favicon:</b> Eigenes Web-Icon integriert.
                 </div>
                 <div class="patch-item">
                     <span class="patch-version">VERSION 2.0.0</span>
@@ -171,6 +176,7 @@ details summary::-webkit-details-marker { display: none; }
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// (Script bleibt unverändert...)
 const db = supabase.createClient("https://hbuppukuizrnzrhwvfou.supabase.co","sb_publishable_atazSTKWDQ5VMKQqHxO0BA_GoPQzPDX");
 let teams=[],events=[],drivers=[],currentTeam=null,selectedDriver=null,selectedMonth="all",editId=null,isAdmin=false;
 
