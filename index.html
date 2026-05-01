@@ -60,17 +60,39 @@
     .info-box {
         background: rgba(255, 123, 0, 0.1);
         border: 1px dashed #ff7b00;
-        padding: 15px;
+        padding: 20px;
         border-radius: 8px;
         margin-bottom: 25px;
     }
 
-    .release-date {
-        display: block;
+    /* Countdown Styling */
+    #countdown {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 10px;
         font-family: 'Orbitron', sans-serif;
+    }
+
+    .countdown-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 60px;
+    }
+
+    .countdown-value {
+        font-size: 28px;
         color: #00aaff;
         font-weight: bold;
-        margin-top: 10px;
+        text-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
+    }
+
+    .countdown-label {
+        font-size: 10px;
+        color: #888;
+        text-transform: uppercase;
+        margin-top: 5px;
     }
 
     .loader {
@@ -112,18 +134,65 @@
     <p>
         Wir arbeiten gerade unter Hochdruck am Dashboard. Da wir uns aktuell in der 
         <span class="beta-badge">Beta-Phase</span> befinden, führen wir regelmäßige 
-        Wartungen durch, um das Erlebnis für euch zu verbessern.
+        Wartungen durch.
     </p>
 
     <div class="info-box">
-        Voraussichtliche Rückkehr zum Rennen:
-        <span class="release-date">In 30 Minuten Verfügbar</span>
+        Voraussichtliche Rückkehr zum Rennen in:
+        <div id="countdown">
+            <div class="countdown-item">
+                <span id="days" class="countdown-value">00</span>
+                <span class="countdown-label">Tage</span>
+            </div>
+            <div class="countdown-item">
+                <span id="hours" class="countdown-value">00</span>
+                <span class="countdown-label">Std</span>
+            </div>
+            <div class="countdown-item">
+                <span id="minutes" class="countdown-value">00</span>
+                <span class="countdown-label">Min</span>
+            </div>
+            <div class="countdown-item">
+                <span id="seconds" class="countdown-value">00</span>
+                <span class="countdown-label">Sek</span>
+            </div>
+        </div>
     </div>
 
     <p style="font-size: 14px; color: #888;">
         Offizielle Veröffentlichung am 04.05.2026 um 16:00 Uhr
     </p>
 </div>
+
+<script>
+    // --- HIER DAS DATUM ANPASSEN ---
+    // Format: "Month Day, Year HH:MM:SS"
+    const targetDate = new Date("May 1, 2026 21:00:00").getTime();
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+            document.getElementById("countdown").innerHTML = "<span style='color:#ff7b00'>GLEICH GEHT ES LOS!</span>";
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = days.toString().padStart(2, '0');
+        document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+        document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+        document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+    }
+
+    // Update jede Sekunde
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+</script>
 
 </body>
 </html>
