@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simracing Kalender (Beta)</title>
 
+<!-- PWA & Mobile Meta -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00ccff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <!-- Favicon / Lesezeichen Icon -->
 <link rel="icon" type="image/png" href="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/favicon_logo.png">
 
@@ -50,25 +56,12 @@ body::after {
 
 /* STYLING */
 header{padding:20px;text-align:center;font-family:'Orbitron';word-wrap:break-word;}
-
-.header-logo { 
-    max-width: 300px; 
-    height: auto; 
-    display: block; 
-    margin: 0 auto; 
-    mix-blend-mode: screen; 
-}
-
+.header-logo { max-width: 300px; height: auto; display: block; margin: 0 auto; mix-blend-mode: screen; }
 .beta-badge{font-size:10px;background:#00ccff;color:#000;padding:2px 6px;border-radius:4px;vertical-align:middle;margin-left:5px;font-weight:900;display:inline-block;}
 
 .maintenance-box {
-    background: #00ccff;
-    color: #000;
-    padding: 15px;
-    text-align: center;
-    font-weight: bold;
-    border-bottom: 3px solid #0099cc;
-    margin-bottom: 20px;
+    background: #00ccff; color: #000; padding: 15px; text-align: center; font-weight: bold;
+    border-bottom: 3px solid #0099cc; margin-bottom: 20px;
 }
 .maintenance-box h3 { margin: 0 0 5px 0; font-family: 'Orbitron'; font-size: 16px; }
 .maintenance-box p { margin: 3px 0; font-size: 14px; }
@@ -98,6 +91,7 @@ header{padding:20px;text-align:center;font-family:'Orbitron';word-wrap:break-wor
 .countdown-text{font-family:'Orbitron';font-size:12px;color:#00aaff;margin-bottom:5px;}
 .stream-link{display:inline-block;margin-top:10px;color:#00aaff;text-decoration:none;border:1px solid #00aaff;padding:5px 10px;border-radius:4px;transition:0.3s;font-size:13px;}
 .stream-link:hover{background:#00aaff;color:#fff;}
+
 button{background:#00ccff;border:none;padding:12px;cursor:pointer;font-family:'Orbitron';margin-top:5px;color:#000;font-weight:bold;width:100%;box-sizing:border-box;font-size:14px;}
 #hamburger{position:fixed;top:15px;right:15px;font-size:28px;cursor:pointer;color:#00ccff;display:none;z-index:999;background:rgba(11,11,11,0.8);padding:5px;border-radius:5px;}
 #sideMenu{position:fixed;top:0;right:-300px;width:260px;height:100%;background:#111;border-left:2px solid #00ccff;padding:20px;transition:0.3s;z-index:998;overflow-y:auto;box-sizing:border-box;}
@@ -107,34 +101,26 @@ button{background:#00ccff;border:none;padding:12px;cursor:pointer;font-family:'O
 .driver{flex-grow:1; padding:8px;background:#1a1a1a;cursor:pointer;border-radius:5px 0 0 5px;transition:0.2s;font-size:14px;}
 .driver.active{background:#00ccff;color:#000;font-weight:bold;}
 .delete-driver-btn{background:#b30000; color:#fff; padding:8px 12px; border-radius:0 5px 5px 0; font-family:'Arial'; cursor:pointer;}
+
 #overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);z-index:1000;}
 #pwdModal,#eventModal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;padding:20px;border:2px solid #00ccff;width:90%;max-width:380px;z-index:1001;border-radius:10px;max-height:90vh;overflow-y:auto;box-sizing:border-box;}
 .modal-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:15px;}
 .modal-grid label{font-size:12px;color:#00ccff;margin-bottom:-5px;font-family:'Orbitron';}
 .modal-grid input,.modal-grid select{background:#222;border:1px solid #444;color:#fff;padding:10px;border-radius:4px;font-family:'Exo 2';width:100%;box-sizing:border-box;font-size:14px;}
-#e_drivers{height:100px;}
 #adminDriverSection{display:none;border-bottom:1px solid #00ccff;padding-bottom:10px;margin-bottom:10px;}
 
 .patchlog-start{width: 100%; max-width:320px; background:#151515; border:2px solid #333; padding:15px; border-radius:10px; margin-bottom: 20px; box-sizing:border-box;}
 details summary { cursor: pointer; font-family: 'Orbitron'; color: #00ccff; font-size: 16px; outline: none; list-style: none; }
-details summary::-webkit-details-marker { display: none; }
 .patch-content { margin-top: 15px; }
 .patch-item{font-size:13px; margin-bottom:15px; color:#ccc; border-bottom: 1px solid #222; padding-bottom: 10px;}
-.patch-item:last-child{border:none;}
 .patch-version{color:#00ccff; font-weight:bold; font-family:'Orbitron'; font-size:12px; margin-bottom:5px; display: block;}
 
 @media (min-width: 900px) {
     #start-container { flex-direction: row; align-items: flex-start; gap: 40px; }
     .header-logo { max-width: 400px; }
-    button { width: auto; min-width: 150px; }
     .team-card img { width: 120px; height: 120px; }
-    .team-name { font-size: 16px; }
-    .event-title { font-size: 18px; }
 }
-
-@media (max-width: 600px) {
-    #teamSelection{grid-template-columns: 1fr;}
-}
+@media (max-width: 600px) { #teamSelection{grid-template-columns: 1fr;} }
 </style>
 </head>
 <body>
@@ -170,29 +156,12 @@ details summary::-webkit-details-marker { display: none; }
             <div class="patch-content">
                 <div class="patch-item">
                     <span class="patch-version">VERSION 2.0.4</span>
-                    • <b>Visuals:</b> Logo-Transparenz via CSS optimiert, Status "Beendet" in Grau & Logo im Hamburgermenü integriert.<br>
-                    • <b>Automatisierung:</b> Termine werden 24h nach Ende automatisch gelöscht.
+                    • <b>Visuals:</b> Logo-Transparenz via CSS optimiert.<br>
+                    • <b>Automatisierung:</b> Termine werden 24h nach Ende gelöscht.
                 </div>
                 <div class="patch-item">
                     <span class="patch-version">VERSION 2.0.3</span>
-                    • <b>Sicherheit:</b> Passwörter werden nicht mehr im Klartext übertragen.<br>
-                    • <b>Hintergrund:</b> Dynamischer Mesh-Gradient und Partikel-Effekte hinzugefügt.<br>
-                    • <b>Layout:</b> Team-Auswahl auf max. 3 Elemente pro Reihe begrenzt.
-                </div>
-                <div class="patch-item">
-                    <span class="patch-version">VERSION 2.0.2</span>
-                    • <b>Branding:</b> GridHub Logo über Supabase eingebunden.<br>
-                    • <b>Teams:</b> MBY Performance Test-Team hinzugefügt.
-                </div>
-                <div class="patch-item">
-                    <span class="patch-version">VERSION 2.0.1</span>
-                    • <b>Mobile Optimierung:</b> Responsiveness verbessert.<br>
-                    • <b>Favicon:</b> Web-Icon integriert.
-                </div>
-                <div class="patch-item">
-                    <span class="patch-version">VERSION 2.0.0</span>
-                    • <b>Admin-Zentrale:</b> Fahrer-Löschfunktion.<br>
-                    • <b>UI:</b> Patchlog einklappbar auf Startseite.
+                    • <b>PWA Support:</b> Website jetzt als App installierbar.
                 </div>
             </div>
         </details>
@@ -215,13 +184,12 @@ details summary::-webkit-details-marker { display: none; }
 
 <div id="pwdModal">
  <h3 id="pwdTitle" style="font-family:'Orbitron'; color:#00ccff;"></h3>
- <p style="font-size: 11px; color: #aaa;">Gib dein Team-Passwort ein.</p>
  <input type="password" id="pwd" placeholder="Passwort..." style="width:100%; padding:12px; box-sizing:border-box; margin-bottom: 10px; background: #222; color: #fff; border: 1px solid #00ccff;">
  <button onclick="login()" style="width:100%;">Login</button>
 </div>
 
 <div id="eventModal">
- <h3 id="modalHeadline" style="font-family:'Orbitron'; color:#00ccff; margin:0; font-size:18px;">Neues Event</h3>
+ <h3 id="modalHeadline" style="font-family:'Orbitron'; color:#00ccff; margin:0; font-size:18px;">Event</h3>
  <div class="modal-grid">
   <label>Titel</label><input id="e_title">
   <label>Datum</label><input id="e_date" type="date">
@@ -231,8 +199,8 @@ details summary::-webkit-details-marker { display: none; }
   </div>
   <label>Strecke</label><input id="e_track">
   <label>Auto</label><input id="e_vehicle">
-  <label>Fahrer auswählen</label><select id="e_drivers" multiple></select>
-  <label>Stream Link</label><input id="e_stream">
+  <label>Fahrer</label><select id="e_drivers" multiple></select>
+  <label>Stream</label><input id="e_stream">
   <label>Status</label>
   <select id="e_status">
    <option value="ok">Findet statt</option>
@@ -240,14 +208,22 @@ details summary::-webkit-details-marker { display: none; }
    <option value="cancelled">Entfällt</option>
   </select>
  </div>
- <button onclick="saveEvent()" style="width:100%; margin-top:15px;">Event Speichern</button>
- <button id="deleteBtn" onclick="deleteEvent()" style="width:100%; background:#b30000; color:#fff; display:none; margin-top:5px;">Termin löschen</button>
+ <button onclick="saveEvent()" style="width:100%; margin-top:15px;">Speichern</button>
+ <button id="deleteBtn" onclick="deleteEvent()" style="width:100%; background:#b30000; color:#fff; display:none; margin-top:5px;">Löschen</button>
  <button onclick="closeAll()" style="width:100%; background:#444; color:#fff; margin-top:5px;">Abbrechen</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const db = supabase.createClient("https://hbuppukuizrnzrhwvfou.supabase.co","sb_publishable_atazSTKWDQ5VMKQqHxO0BA_GoPQzPDX");
+
+// PWA Service Worker Registration
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(() => console.log("SW registriert"))
+    .catch(err => console.log("SW Fehler", err));
+}
+
 let teams=[],events=[],drivers=[],currentTeam=null,selectedDriver=null,selectedMonth="all",editId=null,isAdmin=false;
 
 async function init(){
@@ -265,14 +241,10 @@ async function loadTeams(){
 }
 
 function renderTeams(){
- const c=document.getElementById("teamSelection");
- c.innerHTML="";
- 
+ const c=document.getElementById("teamSelection"); c.innerHTML="";
  const teamMJ = teams.find(t => t.name === "M&J Downforce");
  const teamMBY = teams.find(t => t.name === "MBY Performance (Test)");
- const others = teams.filter(t => t.name !== "M&J Downforce" && t.name !== "MBY Performance (Test)")
-                    .sort((a, b) => a.name.localeCompare(b.name));
-
+ const others = teams.filter(t => t.name !== "M&J Downforce" && t.name !== "MBY Performance (Test)").sort((a, b) => a.name.localeCompare(b.name));
  const finalOrder = [];
  if (teamMJ) finalOrder.push(teamMJ);
  if (others[0]) finalOrder.push(others[0]);
@@ -320,14 +292,10 @@ function back(){ location.reload(); }
 async function loadEvents(){ const {data}=await db.from('events').select('*'); events=data||[]; }
 
 async function cleanupExpiredEvents() {
-    const now = new Date();
-    const deleteThreshold = 24 * 60 * 60 * 1000;
-    
+    const now = new Date(); const deleteThreshold = 24 * 60 * 60 * 1000;
     for (const e of events) {
         const endTime = new Date(e.date + " " + (e.end || "23:59")).getTime();
-        if (now.getTime() - endTime > deleteThreshold) {
-            await db.from('events').delete().eq('id', e.id);
-        }
+        if (now.getTime() - endTime > deleteThreshold) { await db.from('events').delete().eq('id', e.id); }
     }
     await loadEvents();
 }
@@ -353,12 +321,10 @@ function renderEvents(){
   const now=new Date(); const start=new Date(e.date+" "+e.start); const end=new Date(e.date+" "+e.end);
   const isLive = now >= start && now <= end; const isPast = now > end;
   let label = ""; let badgeClass = ""; let eventClass = "";
-  
   if (e.status === "cancelled") { label = "ENTFÄLLT"; badgeClass = "status-cancelled"; eventClass = "cancelled"; }
   else if (isLive) { label = "LIVE"; badgeClass = "status-live"; eventClass = "live"; }
   else if (isPast) { label = "Beendet"; badgeClass = "status-past"; eventClass = "past"; }
   else { label = e.status === "ok" ? "Findet statt" : "Unklar"; badgeClass = e.status === "ok" ? "status-ok" : "status-unclear"; }
-  
   const div = document.createElement("div"); div.className = `event ${eventClass}`;
   div.onclick = () => openEventModal(e);
   div.innerHTML = `
@@ -382,10 +348,8 @@ async function addDriver(){
 }
 
 async function deleteDriver(id, name) {
-    if(!isAdmin) return;
-    if(!confirm(`Fahrer "${name}" wirklich löschen?`)) return;
-    await db.from('drivers').delete().eq('id', id);
-    await loadDrivers();
+    if(!isAdmin) return; if(!confirm(`Fahrer "${name}" wirklich löschen?`)) return;
+    await db.from('drivers').delete().eq('id', id); await loadDrivers();
 }
 
 async function loadDrivers(){ const {data}=await db.from('drivers').select('*'); drivers=data||[]; renderDrivers(); updateDriverDropdown(); }
@@ -420,7 +384,7 @@ function toggleMenu(){ document.getElementById("sideMenu").classList.toggle("ope
 function openEventModal(eventObj = null) {
     updateDriverDropdown(); const driverSelect = document.getElementById("e_drivers");
     if(eventObj && eventObj.id) {
-        editId = eventObj.id; document.getElementById("modalHeadline").innerText = "Event bearbeiten";
+        editId = eventObj.id; document.getElementById("modalHeadline").innerText = "Bearbeiten";
         document.getElementById("e_title").value = eventObj.title; document.getElementById("e_date").value = eventObj.date;
         document.getElementById("e_start").value = eventObj.start; document.getElementById("e_end").value = eventObj.end;
         document.getElementById("e_track").value = eventObj.track; document.getElementById("e_vehicle").value = eventObj.vehicle;
@@ -454,15 +418,13 @@ async function saveEvent(){
     };
     if(!eventData.title || !eventData.date) return alert("Titel und Datum fehlen!");
     let res = editId ? await db.from('events').update(eventData).eq('id', editId) : await db.from('events').insert(eventData);
-    if(res.error) alert("Fehler beim Speichern");
-    else { closeAll(); await loadEvents(); renderEvents(); }
+    if(res.error) alert("Fehler"); else { closeAll(); await loadEvents(); renderEvents(); }
 }
 
 async function deleteEvent() {
-    if(!editId) return; 
-    if(!confirm("Möchtest du dieses Event wirklich löschen?")) return;
+    if(!editId || !confirm("Löschen?")) return;
     const { error } = await db.from('events').delete().eq('id', editId);
-    if(error) alert("Fehler beim Löschen"); else { closeAll(); await loadEvents(); renderEvents(); }
+    if(error) alert("Fehler"); else { closeAll(); await loadEvents(); renderEvents(); }
 }
 
 window.onload=init;
