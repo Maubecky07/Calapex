@@ -6,7 +6,7 @@
 <title>Simracing Kalender (Beta)</title>
 
 <!-- Favicon / Lesezeichen Icon -->
-<link rel="icon" type="image/png" href="Icon_SK_Website.png">
+<link rel="icon" type="image/png" href="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/favicon_logo.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
@@ -271,7 +271,7 @@ function renderTeams(){
  const teamMJ = teams.find(t => t.name === "M&J Downforce");
  const teamMBY = teams.find(t => t.name === "MBY Performance (Test)");
  const others = teams.filter(t => t.name !== "M&J Downforce" && t.name !== "MBY Performance (Test)")
-                     .sort((a, b) => a.name.localeCompare(b.name));
+                    .sort((a, b) => a.name.localeCompare(b.name));
 
  const finalOrder = [];
  if (teamMJ) finalOrder.push(teamMJ);
