@@ -230,6 +230,7 @@ function renderTeams(){
     const c=document.getElementById("teamSelection"); c.innerHTML="";
     const teamMJ = teams.find(t => t.name === "M&J Downforce");
     const teamMBY = teams.find(t => t.name === "MBY Performance (Test)");
+    // Andere Teams (inkl. Green Inferno Racing) alphabetisch sortieren
     const others = teams.filter(t => t.name !== "M&J Downforce" && t.name !== "MBY Performance (Test)").sort((a, b) => a.name.localeCompare(b.name));
     
     const finalOrder = [];
