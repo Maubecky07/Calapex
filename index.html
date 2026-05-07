@@ -1,122 +1,120 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simracing Kalender (Beta)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simracing Kalender (Beta)</title>
 
-<!-- PWA & Mobile Meta -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#00ccff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00ccff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<!-- Favicon / Lesezeichen Icon -->
-<link rel="icon" type="image/png" href="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/favicon_logo.png">
+    <link rel="icon" type="image/png" href="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/favicon_logo.png">
 
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-<style>
-/* HINTERGRUND-EFFEKT */
-body {
-    margin: 0;
-    color: #fff;
-    font-family: 'Exo 2';
-    overflow-x: hidden;
-    background: #050505;
-    background-image: 
-        radial-gradient(at 0% 0%, rgba(0, 204, 255, 0.2) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(0, 100, 255, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(0, 204, 255, 0.2) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(0, 80, 200, 0.15) 0px, transparent 50%);
-    background-attachment: fixed;
-    animation: meshMove 15s ease infinite alternate;
-}
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* HINTERGRUND-EFFEKT */
+        body {
+            margin: 0;
+            color: #fff;
+            font-family: 'Exo 2';
+            overflow-x: hidden;
+            background: #050505;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 204, 255, 0.2) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(0, 100, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 204, 255, 0.2) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(0, 80, 200, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
+            animation: meshMove 15s ease infinite alternate;
+        }
 
-body::after {
-    content: "";
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-image: radial-gradient(circle, #00ccff 1.5px, transparent 1.5px);
-    background-size: 80px 80px;
-    opacity: 0.15;
-    z-index: -1;
-    animation: particlesMove 40s linear infinite;
-}
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: radial-gradient(circle, #00ccff 1.5px, transparent 1.5px);
+            background-size: 80px 80px;
+            opacity: 0.15;
+            z-index: -1;
+            animation: particlesMove 40s linear infinite;
+        }
 
-@keyframes meshMove {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 15% 15%; }
-}
+        @keyframes meshMove { 0% { background-position: 0% 0%; } 100% { background-position: 15% 15%; } }
+        @keyframes particlesMove { from { background-position: 0 0; } to { background-position: 800px 800px; } }
 
-@keyframes particlesMove {
-    from { background-position: 0 0; }
-    to { background-position: 800px 800px; }
-}
+        /* STYLING */
+        header{padding:20px;text-align:center;font-family:'Orbitron';word-wrap:break-word;}
+        .header-logo { max-width: 300px; height: auto; display: block; margin: 0 auto; mix-blend-mode: screen; }
+        .beta-badge{font-size:10px;background:#00ccff;color:#000;padding:2px 6px;border-radius:4px;vertical-align:middle;margin-left:5px;font-weight:900;display:inline-block;}
 
-/* STYLING */
-header{padding:20px;text-align:center;font-family:'Orbitron';word-wrap:break-word;}
-.header-logo { max-width: 300px; height: auto; display: block; margin: 0 auto; mix-blend-mode: screen; }
-.beta-badge{font-size:10px;background:#00ccff;color:#000;padding:2px 6px;border-radius:4px;vertical-align:middle;margin-left:5px;font-weight:900;display:inline-block;}
+        #start-container{display:flex; flex-direction:column; max-width:1200px; margin:auto; padding:15px; box-sizing:border-box;}
+        #teamSelection{display:grid;grid-template-columns:repeat(3, 1fr);gap:15px; flex-grow:1;}
 
-#start-container{display:flex; flex-direction:column; max-width:1200px; margin:auto; padding:15px; box-sizing:border-box;}
-#teamSelection{display:grid;grid-template-columns:repeat(3, 1fr);gap:15px; flex-grow:1;}
+        .team-card{background:#151515;border:2px solid #00ccff;border-radius:10px;padding:15px;text-align:center;cursor:pointer;transition:.3s;display:flex;flex-direction:column;align-items:center;box-sizing:border-box;}
+        .team-card:hover{transform:translateY(-5px); background:#1a1a1a;}
+        .team-card img{width:80px;height:80px;object-fit:contain;margin-bottom:10px;background:#111;border-radius:8px;border:2px solid #00ccff;}
+        .team-name{font-family:'Orbitron';margin-top:10px;font-size:14px;}
 
-.team-card{background:#151515;border:2px solid #00ccff;border-radius:10px;padding:15px;text-align:center;cursor:pointer;transition:.3s;display:flex;flex-direction:column;align-items:center;box-sizing:border-box;}
-.team-card:hover{transform:translateY(-5px); background:#1a1a1a;}
-.team-card img{width:80px;height:80px;object-fit:contain;margin-bottom:10px;background:#111;border-radius:8px;border:2px solid #00ccff;}
-.team-name{font-family:'Orbitron';margin-top:10px;font-size:14px;}
+        .main-wrapper{display:none;max-width:1000px;margin:auto;padding:15px;box-sizing:border-box;}
+        .event{background:#151515;border-left:5px solid #00ccff;margin:10px 0;padding:15px;border-radius:6px;cursor:pointer;transition:0.2s;word-wrap:break-word;}
+        .event:hover{background:#1a1a1a;}
+        .event.live{border-left:5px solid #00ccff;box-shadow:0 0 20px #00ccff;}
+        .event.cancelled{opacity:0.5;border-left:5px solid #ff0000;}
+        .event.past{opacity:0.6;border-left:5px solid #555;}
+        .event-title{font-size:16px;font-family:'Orbitron';color:#00ccff;margin-bottom:8px;}
+        .event-row{display:block;margin:6px 0;font-size:14px;}
+        .status-badge{padding:4px 10px;border-radius:5px;font-size:11px;font-weight:bold;display:inline-block;}
+        .status-ok{background:#1f7a1f;color:#fff;}
+        .status-unclear{background:#b38b00;color:#000;}
+        .status-cancelled{background:#b30000;color:#fff;}
+        .status-live{background:#00aaff;color:#fff;}
+        .status-past{background:#555555;color:#ccc;}
+        .countdown-text{font-family:'Orbitron';font-size:12px;color:#00aaff;margin-bottom:5px;}
+        .stream-link{display:inline-block;margin-top:10px;color:#00aaff;text-decoration:none;border:1px solid #00aaff;padding:5px 10px;border-radius:4px;transition:0.3s;font-size:13px;}
+        .stream-link:hover{background:#00aaff;color:#fff;}
 
-.main-wrapper{display:none;max-width:1000px;margin:auto;padding:15px;box-sizing:border-box;}
-.event{background:#151515;border-left:5px solid #00ccff;margin:10px 0;padding:15px;border-radius:6px;cursor:pointer;transition:0.2s;word-wrap:break-word;}
-.event:hover{background:#1a1a1a;}
-.event.live{border-left:5px solid #00ccff;box-shadow:0 0 20px #00ccff;}
-.event.cancelled{opacity:0.5;border-left:5px solid #ff0000;}
-.event.past{opacity:0.6;border-left:5px solid #555;}
-.event-title{font-size:16px;font-family:'Orbitron';color:#00ccff;margin-bottom:8px;}
-.event-row{display:block;margin:6px 0;font-size:14px;}
-.status-badge{padding:4px 10px;border-radius:5px;font-size:11px;font-weight:bold;display:inline-block;}
-.status-ok{background:#1f7a1f;color:#fff;}
-.status-unclear{background:#b38b00;color:#000;}
-.status-cancelled{background:#b30000;color:#fff;}
-.status-live{background:#00aaff;color:#fff;}
-.status-past{background:#555555;color:#ccc;}
-.countdown-text{font-family:'Orbitron';font-size:12px;color:#00aaff;margin-bottom:5px;}
-.stream-link{display:inline-block;margin-top:10px;color:#00aaff;text-decoration:none;border:1px solid #00aaff;padding:5px 10px;border-radius:4px;transition:0.3s;font-size:13px;}
-.stream-link:hover{background:#00aaff;color:#fff;}
+        button{background:#00ccff;border:none;padding:12px;cursor:pointer;font-family:'Orbitron';margin-top:5px;color:#000;font-weight:bold;width:100%;box-sizing:border-box;font-size:14px;}
+        #hamburger{position:fixed;top:15px;right:15px;font-size:28px;cursor:pointer;color:#00ccff;display:none;z-index:999;background:rgba(11,11,11,0.8);padding:5px;border-radius:5px;}
+        #sideMenu{position:fixed;top:0;right:-300px;width:260px;height:100%;background:#111;border-left:2px solid #00ccff;padding:20px;transition:0.3s;z-index:998;overflow-y:auto;box-sizing:border-box;}
+        #sideMenu.open{right:0;}
+        .menu-logo{width:100%;max-width:150px;margin:0 auto 20px auto;display:block;mix-blend-mode:screen;}
+        .driver-container{display:flex; align-items:center; margin:5px 0;}
+        .driver{flex-grow:1; padding:8px;background:#1a1a1a;cursor:pointer;border-radius:5px 0 0 5px;transition:0.2s;font-size:14px;}
+        .driver.active{background:#00ccff;color:#000;font-weight:bold;}
+        .delete-driver-btn{background:#b30000; color:#fff; padding:8px 12px; border-radius:0 5px 5px 0; font-family:'Arial'; cursor:pointer;}
+        .badge-owner { color: #ffd700; margin-left: 5px; filter: drop-shadow(0 0 2px rgba(255,215,0,0.5)); }
 
-button{background:#00ccff;border:none;padding:12px;cursor:pointer;font-family:'Orbitron';margin-top:5px;color:#000;font-weight:bold;width:100%;box-sizing:border-box;font-size:14px;}
-#hamburger{position:fixed;top:15px;right:15px;font-size:28px;cursor:pointer;color:#00ccff;display:none;z-index:999;background:rgba(11,11,11,0.8);padding:5px;border-radius:5px;}
-#sideMenu{position:fixed;top:0;right:-300px;width:260px;height:100%;background:#111;border-left:2px solid #00ccff;padding:20px;transition:0.3s;z-index:998;overflow-y:auto;box-sizing:border-box;}
-#sideMenu.open{right:0;}
-.menu-logo{width:100%;max-width:150px;margin:0 auto 20px auto;display:block;mix-blend-mode:screen;}
-.driver-container{display:flex; align-items:center; margin:5px 0;}
-.driver{flex-grow:1; padding:8px;background:#1a1a1a;cursor:pointer;border-radius:5px 0 0 5px;transition:0.2s;font-size:14px;}
-.driver.active{background:#00ccff;color:#000;font-weight:bold;}
-.delete-driver-btn{background:#b30000; color:#fff; padding:8px 12px; border-radius:0 5px 5px 0; font-family:'Arial'; cursor:pointer;}
+        #overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);z-index:1000;}
+        #pwdModal,#eventModal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;padding:20px;border:2px solid #00ccff;width:90%;max-width:380px;z-index:1001;border-radius:10px;max-height:90vh;overflow-y:auto;box-sizing:border-box;}
+        .modal-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:15px;}
+        .modal-grid label{font-size:12px;color:#00ccff;margin-bottom:-5px;font-family:'Orbitron';}
+        .modal-grid input,.modal-grid select{background:#222;border:1px solid #444;color:#fff;padding:10px;border-radius:4px;font-family:'Exo 2';width:100%;box-sizing:border-box;font-size:14px;}
+        #adminDriverSection{display:none;border-bottom:1px solid #00ccff;padding-bottom:10px;margin-bottom:10px;}
 
-.badge-owner { color: #ffd700; margin-left: 5px; filter: drop-shadow(0 0 2px rgba(255,215,0,0.5)); }
+        /* POLL & PATCHLOG STYLES */
+        .sidebar-box{width: 100%; max-width:320px; background:#151515; border:2px solid #333; padding:15px; border-radius:10px; margin-bottom: 20px; box-sizing:border-box;}
+        
+        /* Übernommene Umfrage-Styles aus gridhub2.html */
+        .poll-opt-btn { background: #222; border: 1px solid #444; color: #fff; padding: 10px; margin-bottom: 8px; border-radius: 4px; cursor: pointer; text-align: left; font-size: 12px; transition: 0.2s; font-family: 'Exo 2'; width: 100%; box-sizing: border-box; }
+        .poll-opt-btn:hover { border-color: #ffd700; background: #2a2a2a; }
+        .poll-bar-bg { background: #333; height: 10px; border-radius: 5px; margin: 4px 0 12px 0; overflow: hidden; }
+        .poll-bar-fill { background: #ffd700; height: 100%; width: 0%; transition: width 0.6s ease-out; box-shadow: 0 0 10px rgba(255,215,0,0.3); }
 
-#overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);z-index:1000;}
-#pwdModal,#eventModal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;padding:20px;border:2px solid #00ccff;width:90%;max-width:380px;z-index:1001;border-radius:10px;max-height:90vh;overflow-y:auto;box-sizing:border-box;}
-.modal-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:15px;}
-.modal-grid label{font-size:12px;color:#00ccff;margin-bottom:-5px;font-family:'Orbitron';}
-.modal-grid input,.modal-grid select{background:#222;border:1px solid #444;color:#fff;padding:10px;border-radius:4px;font-family:'Exo 2';width:100%;box-sizing:border-box;font-size:14px;}
-#adminDriverSection{display:none;border-bottom:1px solid #00ccff;padding-bottom:10px;margin-bottom:10px;}
+        details summary { cursor: pointer; font-family: 'Orbitron'; color: #00ccff; font-size: 16px; outline: none; list-style: none; }
+        .patch-content { margin-top: 15px; }
+        .patch-item{font-size:13px; margin-bottom:15px; color:#ccc; border-bottom: 1px solid #222; padding-bottom: 10px;}
+        .patch-version{color:#00ccff; font-weight:bold; font-family:'Orbitron'; font-size:12px; margin-bottom:5px; display: block;}
 
-.patchlog-start{width: 100%; max-width:320px; background:#151515; border:2px solid #333; padding:15px; border-radius:10px; margin-bottom: 20px; box-sizing:border-box;}
-details summary { cursor: pointer; font-family: 'Orbitron'; color: #00ccff; font-size: 16px; outline: none; list-style: none; }
-.patch-content { margin-top: 15px; }
-.patch-item{font-size:13px; margin-bottom:15px; color:#ccc; border-bottom: 1px solid #222; padding-bottom: 10px;}
-.patch-version{color:#00ccff; font-weight:bold; font-family:'Orbitron'; font-size:12px; margin-bottom:5px; display: block;}
-
-@media (min-width: 900px) {
-    #start-container { flex-direction: row; align-items: flex-start; gap: 40px; }
-    .header-logo { max-width: 400px; }
-    .team-card img { width: 120px; height: 120px; }
-}
-@media (max-width: 600px) { #teamSelection{grid-template-columns: 1fr;} }
-</style>
+        @media (min-width: 900px) {
+            #start-container { flex-direction: row; align-items: flex-start; gap: 40px; }
+            .header-logo { max-width: 400px; }
+            .team-card img { width: 120px; height: 120px; }
+        }
+        @media (max-width: 600px) { #teamSelection{grid-template-columns: 1fr;} }
+    </style>
 </head>
 <body>
 
@@ -140,25 +138,40 @@ details summary { cursor: pointer; font-family: 'Orbitron'; color: #00ccff; font
 </div>
 
 <div id="start-container">
-    <div id="patchlog-container" class="patchlog-start">
-        <details>
-            <summary>📦 Patchlog Details</summary>
-            <div class="patch-content">
-                <div class="patch-item">
-                    <span class="patch-version">VERSION 2.0.5</span>
-                    • <b>Teams:</b> Neon Simsports hinzugefügt.<br>
-                    • <b>Auth:</b> System auf 2-Passwort-Struktur (User/Admin) umgestellt.<br>
-                    • <b>Features:</b> Teamchef-Symbol (👑) über Suffix "| Admin" verfügbar.<br>
-                    • <b>UX:</b> Automatische alphabetische Sortierung der Fahrerliste.
-                </div>
-                <div class="patch-item">
-                    <span class="patch-version">VERSION 2.0.4</span>
-                    • <b>Visuals:</b> Logo-Darstellung und Transparenz optimiert.<br>
-                    • <b>Automatisierung:</b> Alte Termine werden 24h nach Ende gelöscht.
-                </div>
+    <div id="left-sidebar">
+        <div id="poll-container" class="sidebar-box" style="display:none; border-color: #ffd700;">
+            <h3 style="font-family:'Orbitron'; color:#ffd700; font-size: 14px; margin-top: 0; margin-bottom: 5px;">📊 Blitz-Umfrage</h3>
+            <!-- NEU: Anzeige für das Enddatum -->
+            <div id="poll-expiry-display" style="font-size: 10px; color: #ffd700; font-family: 'Orbitron'; margin-bottom: 12px; opacity: 0.8;"></div>
+            
+            <div id="poll-question" style="font-size: 14px; margin-bottom: 15px; font-weight: bold; color: #fff; line-height: 1.4;"></div>
+            <div id="poll-options"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid #333; padding-top: 8px;">
+                <div id="poll-votes-count" style="font-size: 10px; color: #ffd700; font-family: 'Orbitron';"></div>
             </div>
-        </details>
+        </div>
+
+        <div id="patchlog-container" class="sidebar-box">
+            <details>
+                <summary>📦 Patchlog Details</summary>
+                <div class="patch-content">
+                    <div class="patch-item">
+                        <span class="patch-version">VERSION 2.0.5</span>
+                        • <b>Teams:</b> Neon Simsports hinzugefügt.<br>
+                        • <b>Auth:</b> System auf 2-Passwort-Struktur (User/Admin) umgestellt.<br>
+                        • <b>Features:</b> Teamchef-Symbol (👑) über Suffix "| Admin" verfügbar.<br>
+                        • <b>UX:</b> Automatische alphabetische Sortierung der Fahrerliste.
+                    </div>
+                    <div class="patch-item">
+                        <span class="patch-version">VERSION 2.0.4</span>
+                        • <b>Visuals:</b> Logo-Darstellung und Transparenz optimiert.<br>
+                        • <b>Automatisierung:</b> Alte Termine werden 24h nach Ende gelöscht.
+                    </div>
+                </div>
+            </details>
+        </div>
     </div>
+
     <div id="teamSelection"></div>
 </div>
 
@@ -211,13 +224,90 @@ details summary { cursor: pointer; font-family: 'Orbitron'; color: #00ccff; font
 const db = supabase.createClient("https://hbuppukuizrnzrhwvfou.supabase.co","sb_publishable_atazSTKWDQ5VMKQqHxO0BA_GoPQzPDX");
 
 let teams=[],events=[],drivers=[],currentTeam=null,selectedDriver=null,selectedMonth="all",editId=null,isAdmin=false,isRealAdmin=false;
+let currentPoll = null;
 
 async function init(){
     await loadTeams();
+    await loadActivePoll(); // Übernommen aus gridhub2.html
     document.getElementById("monthFilter").onchange=(e)=>{selectedMonth=e.target.value; renderEvents();};
     setInterval(() => { if(events.length > 0) renderEvents(); }, 1000); 
     setInterval(cleanupExpiredEvents, 60000);
 }
+
+// --- ÜBERNOMMENE UMFRAGE LOGIK START ---
+async function loadActivePoll() {
+    try {
+        const now = new Date().toISOString();
+        const { data } = await db.from('polls')
+            .select('*')
+            .gt('expires_at', now)
+            .order('expires_at', { ascending: true })
+            .limit(1);
+
+        if (data && data.length > 0) {
+            currentPoll = data[0];
+            renderPoll();
+        }
+    } catch (e) { console.log("Keine Umfrage aktiv."); }
+}
+
+function renderPoll() {
+    const container = document.getElementById("poll-container");
+    const qDiv = document.getElementById("poll-question");
+    const oDiv = document.getElementById("poll-options");
+    const vDiv = document.getElementById("poll-votes-count");
+    const expiryDiv = document.getElementById("poll-expiry-display");
+
+    if(!container || !currentPoll) return;
+
+    container.style.display = "block";
+    qDiv.innerText = currentPoll.question;
+    oDiv.innerHTML = "";
+    
+    // NEU: Enddatum formatieren und anzeigen
+    if(currentPoll.expires_at) {
+        const exp = new Date(currentPoll.expires_at);
+        const day = exp.getDate().toString().padStart(2, '0');
+        const month = (exp.getMonth() + 1).toString().padStart(2, '0');
+        const hrs = exp.getHours().toString().padStart(2, '0');
+        const mins = exp.getMinutes().toString().padStart(2, '0');
+        expiryDiv.innerText = `⏳ Bis: ${day}.${month}. um ${hrs}:${mins} Uhr`;
+    }
+
+    const hasVoted = localStorage.getItem(`voted_poll_${currentPoll.id}`);
+    const totalVotes = Object.values(currentPoll.options).reduce((a, b) => a + b, 0);
+
+    for (const [option, count] of Object.entries(currentPoll.options)) {
+        if (!hasVoted) {
+            const btn = document.createElement("div");
+            btn.className = "poll-opt-btn";
+            btn.innerText = option;
+            btn.onclick = () => castVote(option);
+            oDiv.appendChild(btn);
+        } else {
+            const percent = totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 0;
+            oDiv.innerHTML += `
+                <div style="font-size:12px; margin-top:8px; display:flex; justify-content:space-between;">
+                    <span>${option}</span>
+                    <span style="color:#ffd700; font-weight:bold;">${percent}%</span>
+                </div>
+                <div class="poll-bar-bg"><div class="poll-bar-fill" style="width:${percent}%"></div></div>
+            `;
+        }
+    }
+    vDiv.innerText = `Stimmen gesamt: ${totalVotes}`;
+}
+
+async function castVote(option) {
+    if (!currentPoll) return;
+    currentPoll.options[option] += 1;
+    const { error } = await db.from('polls').update({ options: currentPoll.options }).eq('id', currentPoll.id);
+    if (!error) {
+        localStorage.setItem(`voted_poll_${currentPoll.id}`, "true");
+        renderPoll();
+    }
+}
+// --- ÜBERNOMMENE UMFRAGE LOGIK ENDE ---
 
 async function loadTeams(){ 
     const {data}=await db.from('teams').select('name, logo'); 
@@ -257,19 +347,11 @@ function renderTeams(){
 async function login(){
     const inputPwd = document.getElementById("pwd").value;
     const { data: teamData } = await db.from('teams').select('password, admin_password').eq('name', currentTeam.name).single();
-
     if (teamData) {
-        if (inputPwd === teamData.admin_password) {
-            isAdmin = true; isRealAdmin = true;
-        } else if (inputPwd === teamData.password) {
-            isAdmin = true; isRealAdmin = false;
-        } else {
-            alert("Passwort falsch!"); return;
-        }
-        await loadData();
-        completeLogin();
-    } else {
-        alert("Datenbankfehler oder Team nicht gefunden.");
+        if (inputPwd === teamData.admin_password) { isAdmin = true; isRealAdmin = true; }
+        else if (inputPwd === teamData.password) { isAdmin = true; isRealAdmin = false; }
+        else { alert("Passwort falsch!"); return; }
+        await loadData(); completeLogin();
     }
 }
 
@@ -278,8 +360,7 @@ async function loadData() {
         db.from('events').select('*').eq('team', currentTeam.name),
         db.from('drivers').select('*').eq('team', currentTeam.name).order('name', { ascending: true })
     ]);
-    events = ev.data || [];
-    drivers = dr.data || [];
+    events = ev.data || []; drivers = dr.data || [];
 }
 
 function openLogin(t){ currentTeam=t; document.getElementById("pwdTitle").innerText=t.name; document.getElementById("pwd").value = ""; document.getElementById("pwdModal").style.display="block"; document.getElementById("overlay").style.display="block"; }
@@ -329,7 +410,6 @@ function renderEvents(){
         let badgeClass = e.status === "cancelled" ? "status-cancelled" : (isLive ? "status-live" : (isPast ? "status-past" : (e.status === "ok" ? "status-ok" : "status-unclear")));
         const div = document.createElement("div"); div.className = `event ${isLive ? 'live' : ''} ${isPast ? 'past' : ''} ${e.status==='cancelled' ? 'cancelled' : ''}`;
         div.onclick = () => isAdmin ? openEventModal(e) : null;
-        
         const driverDisplay = (e.drivers || "").split(", ").map(formatDriverName).join(", ");
         div.innerHTML = `
             <div class="event-title">${e.title}</div><div class="countdown-text">${(isPast || e.status==="cancelled") ? "" : (isLive ? "Endet in: "+getCountdown(end) : "Startet in: "+getCountdown(start))}</div>
