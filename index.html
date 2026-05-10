@@ -50,6 +50,21 @@
         .header-logo { max-width: 300px; height: auto; display: block; margin: 0 auto; mix-blend-mode: screen; }
         .beta-badge{font-size:10px;background:#00ccff;color:#000;padding:2px 6px;border-radius:4px;vertical-align:middle;margin-left:5px;font-weight:900;display:inline-block;}
 
+        /* WARTUNGS-BANNER */
+        .maintenance-notice {
+            background: rgba(255, 153, 0, 0.15);
+            border: 1px solid #ff9900;
+            border-radius: 8px;
+            padding: 15px;
+            max-width: 500px;
+            margin: 0 auto 20px auto;
+            color: #ff9900;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 153, 0, 0.1);
+        }
+        .maintenance-notice h4 { margin: 0; font-family: 'Orbitron'; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        .maintenance-notice p { margin: 5px 0 0 0; font-size: 12px; font-weight: bold; }
+
         #start-container{display:flex; flex-direction:column; max-width:1200px; margin:auto; padding:15px; box-sizing:border-box;}
         #teamSelection{display:grid;grid-template-columns:repeat(3, 1fr);gap:15px; flex-grow:1;}
 
@@ -97,7 +112,7 @@
         /* POLL & PATCHLOG STYLES */
         .sidebar-box{width: 100%; max-width:320px; background:#151515; border:2px solid #333; padding:15px; border-radius:10px; margin-bottom: 20px; box-sizing:border-box;}
         
-        /* Übernommene Umfrage-Styles aus gridhub2.html */
+        /* Übernommene Umfrage-Styles */
         .poll-opt-btn { background: #222; border: 1px solid #444; color: #fff; padding: 10px; margin-bottom: 8px; border-radius: 4px; cursor: pointer; text-align: left; font-size: 12px; transition: 0.2s; font-family: 'Exo 2'; width: 100%; box-sizing: border-box; }
         .poll-opt-btn:hover { border-color: #ffd700; background: #2a2a2a; }
         .poll-bar-bg { background: #333; height: 10px; border-radius: 5px; margin: 4px 0 12px 0; overflow: hidden; }
@@ -119,6 +134,10 @@
 <body>
 
 <header>
+    <div class="maintenance-notice">
+        <h4>Wartungsarbeiten 11.05.2026 um 15 Uhr</h4>
+        <p>Update v2.0.6 & Fehlerbehebungen</p>
+    </div>
     <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/gridhub_logo.jpeg" alt="GridHub Logo" class="header-logo">
     <span class="beta-badge">BETA v2.0.5</span>
 </header>
@@ -141,7 +160,6 @@
     <div id="left-sidebar">
         <div id="poll-container" class="sidebar-box" style="display:none; border-color: #ffd700;">
             <h3 style="font-family:'Orbitron'; color:#ffd700; font-size: 14px; margin-top: 0; margin-bottom: 5px;">📊 Blitz-Umfrage</h3>
-            <!-- NEU: Anzeige für das Enddatum -->
             <div id="poll-expiry-display" style="font-size: 10px; color: #ffd700; font-family: 'Orbitron'; margin-bottom: 12px; opacity: 0.8;"></div>
             
             <div id="poll-question" style="font-size: 14px; margin-bottom: 15px; font-weight: bold; color: #fff; line-height: 1.4;"></div>
@@ -228,13 +246,12 @@ let currentPoll = null;
 
 async function init(){
     await loadTeams();
-    await loadActivePoll(); // Übernommen aus gridhub2.html
+    await loadActivePoll();
     document.getElementById("monthFilter").onchange=(e)=>{selectedMonth=e.target.value; renderEvents();};
     setInterval(() => { if(events.length > 0) renderEvents(); }, 1000); 
     setInterval(cleanupExpiredEvents, 60000);
 }
 
-// --- ÜBERNOMMENE UMFRAGE LOGIK START ---
 async function loadActivePoll() {
     try {
         const now = new Date().toISOString();
@@ -264,7 +281,6 @@ function renderPoll() {
     qDiv.innerText = currentPoll.question;
     oDiv.innerHTML = "";
     
-    // NEU: Enddatum formatieren und anzeigen
     if(currentPoll.expires_at) {
         const exp = new Date(currentPoll.expires_at);
         const day = exp.getDate().toString().padStart(2, '0');
@@ -307,7 +323,6 @@ async function castVote(option) {
         renderPoll();
     }
 }
-// --- ÜBERNOMMENE UMFRAGE LOGIK ENDE ---
 
 async function loadTeams(){ 
     const {data}=await db.from('teams').select('name, logo'); 
