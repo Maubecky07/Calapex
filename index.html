@@ -6,7 +6,7 @@
 <title>Simracing Kalender (Beta)</title>
 
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#00ccff">
+<meta name="theme-color" content="#e30613">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -14,84 +14,123 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-/* HINTERGRUND-EFFEKT */
+/* HINTERGRUND-EFFEKT (Vielseitiger, dezenteres Rot, lebendig) */
 body {
     margin: 0;
     color: #fff;
     font-family: 'Exo 2';
     overflow-x: hidden;
-    background: #050505;
+    background: #030303;
     background-image: 
-        radial-gradient(at 0% 0%, rgba(0, 204, 255, 0.2) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(0, 100, 255, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(0, 204, 255, 0.2) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(0, 80, 200, 0.15) 0px, transparent 50%);
+        radial-gradient(at 10% 10%, rgba(227, 6, 19, 0.08) 0px, transparent 45%),
+        radial-gradient(at 90% 10%, rgba(30, 30, 35, 0.4) 0px, transparent 50%),
+        radial-gradient(at 90% 90%, rgba(227, 6, 19, 0.06) 0px, transparent 45%),
+        radial-gradient(at 10% 90%, rgba(20, 20, 25, 0.4) 0px, transparent 50%),
+        linear-gradient(135deg, #050505 0%, #121214 50%, #020202 100%);
     background-attachment: fixed;
+    position: relative;
 }
 
+/* Subtiles Racing-Grid & Punkte-Matrix */
 body::after {
     content: "";
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background-image: radial-gradient(circle, #00ccff 1.5px, transparent 1.5px);
-    background-size: 80px 80px;
-    opacity: 0.15;
-    z-index: -1;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.005) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.005) 1px, transparent 1px),
+        radial-gradient(circle, rgba(227, 6, 19, 0.12) 1px, transparent 1.5px);
+    background-size: 40px 40px, 40px 40px, 80px 80px;
+    opacity: 0.8;
+    z-index: -2;
 }
+
+/* ANIMIERTES LEBENDIGES ELEMENT (Schwebende Racing-Partikel im Hintergrund) */
+@keyframes backgroundFloat {
+    0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.2; }
+    90% { opacity: 0.2; }
+    100% { transform: translateY(-10vh) translateX(50px) rotate(360deg); opacity: 0; }
+}
+
+.bg-particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+.bg-particles span {
+    position: absolute;
+    display: block;
+    width: 4px; height: 4px;
+    background: #e30613;
+    box-shadow: 0 0 10px #e30613;
+    border-radius: 50%;
+    bottom: -10px;
+    animation: backgroundFloat 25s infinite linear;
+}
+.bg-particles span:nth-child(1) { left: 10%; width: 6px; height: 6px; animation-duration: 22s; animation-delay: 1s; }
+.bg-particles span:nth-child(2) { left: 30%; width: 3px; height: 3px; animation-duration: 28s; animation-delay: 5s; background: #fff; box-shadow: 0 0 8px #fff; }
+.bg-particles span:nth-child(3) { left: 55%; width: 5px; height: 5px; animation-duration: 20s; animation-delay: 0s; }
+.bg-particles span:nth-child(4) { left: 75%; width: 4px; height: 4px; animation-duration: 32s; animation-delay: 7s; }
+.bg-particles span:nth-child(5) { left: 90%; width: 7px; height: 7px; animation-duration: 25s; animation-delay: 3s; background: #333; box-shadow: none; }
 
 /* ORIGINAL STYLING GRÖSSEN */
 header{padding:20px;text-align:center;font-family:'Orbitron';word-wrap:break-word;}
-.header-logo { max-width: 300px; height: auto; display: block; margin: 0 auto; mix-blend-mode: screen; }
-.beta-badge{font-size:10px;background:#00ccff;color:#000;padding:2px 6px;border-radius:4px;vertical-align:middle;margin-left:5px;font-weight:900;display:inline-block;}
+.header-logo { max-width: 300px; height: auto; display: block; margin: 0 auto; mix-blend-mode: screen; filter: contrast(115%) brightness(115%); background-color: transparent; }
+.beta-badge{font-size:10px;background:#e30613;color:#fff;padding:2px 6px;border-radius:4px;vertical-align:middle;margin-left:5px;font-weight:900;display:inline-block;}
 
 #start-container{display:flex; flex-direction:column; max-width:1200px; margin:auto; padding:15px; box-sizing:border-box;}
 #teamSelection{display:grid;grid-template-columns:repeat(3, 1fr);gap:15px; flex-grow:1;}
 
-.team-card{background:#151515;border:2px solid #00ccff;border-radius:10px;padding:15px;text-align:center;cursor:pointer;transition:.3s;display:flex;flex-direction:column;align-items:center;box-sizing:border-box;}
+.team-card{background:#151515;border:2px solid #e30613;border-radius:10px;padding:15px;text-align:center;cursor:pointer;transition:.3s;display:flex;flex-direction:column;align-items:center;box-sizing:border-box;}
 .team-card:hover{transform:translateY(-5px); background:#1a1a1a;}
-.team-card img{width:80px;height:80px;object-fit:contain;margin-bottom:10px;background:#111;border-radius:8px;border:2px solid #00ccff;}
+.team-card img{width:80px;height:80px;object-fit:contain;margin-bottom:10px;background:#111;border-radius:8px;border:2px solid #e30613;}
 .team-name{font-family:'Orbitron';margin-top:10px;font-size:14px;}
 
 .main-wrapper{display:none;max-width:1000px;margin:auto;padding:15px;box-sizing:border-box;}
-.event{background:#151515;border-left:5px solid #00ccff;margin:10px 0;padding:15px;border-radius:6px;cursor:pointer;transition:0.2s;word-wrap:break-word;position:relative;}
+.event{background:#151515;border-left:5px solid #e30613;margin:10px 0;padding:15px;border-radius:6px;cursor:pointer;transition:0.2s;word-wrap:break-word;position:relative;}
 .event:hover{background:#1a1a1a;}
-.event.live{border-left:5px solid #00ccff;box-shadow:0 0 20px #00ccff;}
+.event.live{border-left:5px solid #e30613;box-shadow:0 0 20px #e30613;}
 .event.cancelled{opacity:0.5;border-left:5px solid #ff0000;}
 .event.past{opacity:0.6;border-left:5px solid #555;}
-.event-title{font-size:16px;font-family:'Orbitron';color:#00ccff;margin-bottom:8px;}
+.event-title{font-size:16px;font-family:'Orbitron';color:#e30613;margin-bottom:8px;}
 .event-row{display:block;margin:6px 0;font-size:14px;}
 .status-badge{padding:4px 10px;border-radius:5px;font-size:11px;font-weight:bold;display:inline-block;}
 .status-ok{background:#1f7a1f;color:#fff;}
 .status-unclear{background:#b38b00;color:#000;}
 .status-cancelled{background:#b30000;color:#fff;}
-.status-live{background:#00aaff;color:#fff;}
+.status-live{background:#ff2a3b;color:#fff;}
 .status-past{background:#555555;color:#ccc;}
-.countdown-text{font-family:'Orbitron';font-size:12px;color:#00aaff;margin-bottom:5px;}
+.countdown-text{font-family:'Orbitron';font-size:12px;color:#ff2a3b;margin-bottom:5px;}
 
 /* KOMPAKTER NOTIZBUTTON */
 .note-btn {
-    display: inline-block; margin-top: 10px; background: transparent; color: #00ccff; 
-    border: 1px solid #00ccff; padding: 6px 12px; border-radius: 4px; 
+    display: inline-block; margin-top: 10px; background: transparent; color: #e30613; 
+    border: 1px solid #e30613; padding: 6px 12px; border-radius: 4px; 
     cursor: pointer; font-family: 'Orbitron'; font-size: 11px; transition: 0.3s;
     width: auto; 
 }
-.note-btn:hover { background: #00ccff; color: #000; }
+.note-btn:hover { background: #e30613; color: #fff; }
 
-.stream-link{display:inline-block;margin-top:10px;color:#00aaff;text-decoration:none;border:1px solid #00aaff;padding:5px 10px;border-radius:4px;transition:0.3s;font-size:13px; width: auto;}
-.stream-link:hover{background:#00aaff;color:#fff;}
+.stream-link{display:inline-block;margin-top:10px;color:#ff2a3b;text-decoration:none;border:1px solid #ff2a3b;padding:5px 10px;border-radius:4px;transition:0.3s;font-size:13px; width: auto;}
+.stream-link:hover{background:#ff2a3b;color:#fff;}
 
-button{background:#00ccff;border:none;padding:12px;cursor:pointer;font-family:'Orbitron';margin-top:5px;color:#000;font-weight:bold;width:100%;box-sizing:border-box;font-size:14px;}
-#hamburger{position:fixed;top:15px;right:15px;font-size:28px;cursor:pointer;color:#00ccff;display:none;z-index:999;background:rgba(11,11,11,0.8);padding:5px;border-radius:5px;}
+button{background:#e30613;border:none;padding:12px;cursor:pointer;font-family:'Orbitron';margin-top:5px;color:#fff;font-weight:bold;width:100%;box-sizing:border-box;font-size:14px;}
+button:hover{background:#ff2a3b;}
+#hamburger{position:fixed;top:15px;right:15px;font-size:28px;cursor:pointer;color:#e30613;display:none;z-index:999;background:rgba(11,11,11,0.8);padding:5px;border-radius:5px;}
 
-#sideMenu{position:fixed;top:0;right:-320px;width:300px;height:100%;background:#111;border-left:2px solid #00ccff;padding:20px;transition:0.3s;z-index:998;overflow-y:auto;box-sizing:border-box;}
+#sideMenu{position:fixed;top:0;right:-320px;width:300px;height:100%;background:#111;border-left:2px solid #e30613;padding:20px;transition:0.3s;z-index:998;overflow-y:auto;box-sizing:border-box;}
 #sideMenu.open{right:0;}
-.menu-logo{width:100%;max-width:150px;margin:0 auto 20px auto;display:block;mix-blend-mode:screen;}
+.menu-logo{width:100%;max-width:150px;margin:0 auto 20px auto;display:block;mix-blend-mode:screen;filter: contrast(115%) brightness(115%); background-color: transparent;}
 
 /* FAHRER-LISTE & LÖSCHEN */
 .driver-container{display:flex; align-items:center; margin:8px 0; width: 100%;}
 .driver{flex-grow:1; padding:10px 12px; background:#1a1a1a; cursor:pointer; border-radius:5px 0 0 5px; transition:0.2s; font-size:14px; line-height:1.4; word-wrap:break-word; border:1px solid transparent;}
-.driver.active{background:#00ccff; color:#000; font-weight:bold; border:1px solid #00ccff;}
+.driver.active{background:#e30613; color:#fff; font-weight:bold; border:1px solid #e30613;}
 .driver:only-child { border-radius: 5px; }
 
 .delete-driver-btn{background:#b30000; color:#fff; padding:10px 12px; border-radius:0 5px 5px 0; font-family:'Arial'; cursor:pointer; font-weight: bold; border: none; width: auto; margin: 0;}
@@ -99,7 +138,7 @@ button{background:#00ccff;border:none;padding:12px;cursor:pointer;font-family:'O
 .badge-owner { color: #ffd700; margin-left: 5px; filter: drop-shadow(0 0 2px rgba(255,215,0,0.5)); }
 
 #overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);z-index:1000;}
-#pwdModal,#eventModal,#noteModal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;padding:20px;border:2px solid #00ccff;width:90%;max-width:380px;z-index:1001;border-radius:10px;max-height:90vh;overflow-y:auto;box-sizing:border-box;}
+#pwdModal,#eventModal,#noteModal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;padding:20px;border:2px solid #e30613;width:90%;max-width:380px;z-index:1001;border-radius:10px;max-height:90vh;overflow-y:auto;box-sizing:border-box;}
 
 #e_notes{
     width: 100%; 
@@ -117,18 +156,18 @@ button{background:#00ccff;border:none;padding:12px;cursor:pointer;font-family:'O
 }
 
 .modal-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:15px;}
-.modal-grid label{font-size:12px;color:#00ccff;margin-bottom:-5px;font-family:'Orbitron';}
+.modal-grid label{font-size:12px;color:#e30613;margin-bottom:-5px;font-family:'Orbitron';}
 .modal-grid input,.modal-grid select{background:#222;border:1px solid #444;color:#fff;padding:10px;border-radius:4px;font-family:'Exo 2';width:100%;box-sizing:border-box;font-size:14px;}
-#adminDriverSection{display:none;border-bottom:1px solid #00ccff;padding-bottom:10px;margin-bottom:10px;}
+#adminDriverSection{display:none;border-bottom:1px solid #e30613;padding-bottom:10px;margin-bottom:10px;}
 
 /* PATCHLOG ORIGINAL */
 .patchlog-start{width: 100%; max-width:320px; background:#151515; border:2px solid #333; padding:15px; border-radius:10px; margin-bottom: 20px; box-sizing:border-box;}
 .patch-entry { margin-bottom: 15px; font-size: 13px; }
-.patch-version { color: #00ccff; font-family: 'Orbitron'; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 3px; margin-bottom: 8px; display: block; }
+.patch-version { color: #e30613; font-family: 'Orbitron'; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 3px; margin-bottom: 8px; display: block; }
 .p-tag { font-size: 9px; font-weight: 900; padding: 2px 4px; border-radius: 3px; margin-right: 5px; display: inline-block; min-width: 45px; text-align: center; }
 .p-neu { background: #00ff00; color: #000; }
 .p-fix { background: #ff0000; color: #fff; }
-.p-change { background: #00ccff; color: #000; }
+.p-change { background: #e30613; color: #fff; }
 .p-item { margin: 4px 0; color: #ccc; line-height: 1.4; }
 
 /* UMFRAGE BOX STYLING */
@@ -147,17 +186,25 @@ button{background:#00ccff;border:none;padding:12px;cursor:pointer;font-family:'O
 </head>
 <body>
 
+<div class="bg-particles">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
 <header>
-    <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/gridhub_logo.jpeg" alt="GridHub Logo" class="header-logo">
+    <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.png" alt="GridHub Logo" class="header-logo">
     <span class="beta-badge">BETA v2.0.6</span>
 </header>
 <div id="hamburger" onclick="window.ui.toggleMenu()">☰</div>
 
 <div id="sideMenu">
- <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/gridhub_logo.jpeg" alt="GridHub Logo" class="menu-logo">
+ <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.png" alt="GridHub Logo" class="menu-logo">
  <h3>Fahrer</h3>
  <div id="adminDriverSection">
-    <label style="font-size: 10px; color: #00ccff; font-family: 'Orbitron';">ADMIN BEREICH</label>
+    <label style="font-size: 10px; color: #e30613; font-family: 'Orbitron';">ADMIN BEREICH</label>
     <input id="newDriverName" placeholder="Name | Admin" style="width:100%; box-sizing:border-box; margin-bottom:5px; padding:8px; background: #222; color: #fff; border: 1px solid #444;">
     <button onclick="window.ui.addDriver()">+ Fahrer hinzufügen</button>
  </div>
@@ -181,7 +228,7 @@ button{background:#00ccff;border:none;padding:12px;cursor:pointer;font-family:'O
 
         <div class="patchlog-start">
             <details open>
-                <summary style="cursor:pointer; color:#00ccff; font-family:'Orbitron'; margin-bottom: 10px;">📦 Patchlog</summary>
+                <summary style="cursor:pointer; color:#e30613; font-family:'Orbitron'; margin-bottom: 10px;">📦 Patchlog</summary>
                 
                 <div class="patch-entry">
                     <span class="patch-version">v2.0.6</span>
@@ -210,8 +257,8 @@ button{background:#00ccff;border:none;padding:12px;cursor:pointer;font-family:'O
 <div class="main-wrapper">
  <button onclick="window.ui.back()" style="margin-bottom:10px;">⬅ zurück</button>
  <button id="addEventBtn" onclick="window.ui.openEventModal()" style="display:none; margin-bottom:10px;">+ Termin erstellen</button>
- <h2 id="teamTitle" style="font-family:'Orbitron'; font-size:20px; color:#00ccff;"></h2>
- <select id="monthFilter" style="padding:12px; background:#151515; color:#fff; border:1px solid #00ccff; width:100%; margin-bottom:15px;">
+ <h2 id="teamTitle" style="font-family:'Orbitron'; font-size:20px; color:#e30613;"></h2>
+ <select id="monthFilter" style="padding:12px; background:#151515; color:#fff; border:1px solid #e30613; width:100%; margin-bottom:15px;">
   <option value="all">Alle Monate</option>
   <option value="0">Januar</option><option value="1">Februar</option><option value="2">März</option><option value="3">April</option><option value="4">Mai</option><option value="5">Juni</option><option value="6">Juli</option><option value="7">August</option><option value="8">September</option><option value="9">Oktober</option><option value="10">November</option><option value="11">Dezember</option>
  </select>
@@ -221,13 +268,13 @@ button{background:#00ccff;border:none;padding:12px;cursor:pointer;font-family:'O
 <div id="overlay" onclick="window.ui.closeAll()"></div>
 
 <div id="pwdModal">
- <h3 id="pwdTitle" style="font-family:'Orbitron'; color:#00ccff;"></h3>
- <input type="password" id="pwd" placeholder="Passwort..." style="width:100%; padding:12px; box-sizing:border-box; margin-bottom: 10px; background: #222; color: #fff; border: 1px solid #00ccff;">
+ <h3 id="pwdTitle" style="font-family:'Orbitron'; color:#e30613;"></h3>
+ <input type="password" id="pwd" placeholder="Passwort..." style="width:100%; padding:12px; box-sizing:border-box; margin-bottom: 10px; background: #222; color: #fff; border: 1px solid #e30613;">
  <button onclick="window.ui.login()">Login</button>
 </div>
 
 <div id="eventModal">
- <h3 id="modalHeadline" style="font-family:'Orbitron'; color:#00ccff;">Event</h3>
+ <h3 id="modalHeadline" style="font-family:'Orbitron'; color:#e30613;">Event</h3>
  <div class="modal-grid">
   <label>Titel</label><input id="e_title">
   <label>Datum</label><input id="e_date" type="date">
@@ -252,7 +299,7 @@ button{background:#00ccff;border:none;padding:12px;cursor:pointer;font-family:'O
 </div>
 
 <div id="noteModal">
-    <h3 style="font-family:'Orbitron'; color:#00ccff; margin:0;">📝 Event Notizen</h3>
+    <h3 style="font-family:'Orbitron'; color:#e30613; margin:0;">📝 Event Notizen</h3>
     <textarea id="e_notes" placeholder="Hier kannst du Notizen zum Rennen eintragen..."></textarea>
     <button id="saveNoteBtn" onclick="window.ui.saveNote()" style="margin-top:10px;">Speichern</button>
     <button onclick="window.ui.closeAll()" style="background:#444; margin-top:5px;">Schließen</button>
