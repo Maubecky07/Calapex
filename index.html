@@ -176,6 +176,29 @@ button:hover{background:#ff2a3b;}
 .poll-bar-bg { background: #333; height: 10px; border-radius: 5px; margin: 4px 0 12px 0; overflow: hidden; }
 .poll-bar-fill { background: #ffd700; height: 100%; width: 0%; transition: width 0.6s ease-out; box-shadow: 0 0 10px rgba(255,215,0,0.3); }
 
+/* WARTUNGSARBEITEN BOX STYLING */
+.maintenance-box {
+    max-width: 1170px;
+    margin: 10px auto 20px auto;
+    padding: 12px 20px;
+    background: rgba(227, 6, 19, 0.15);
+    border: 2px dashed #e30613;
+    border-radius: 8px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 0 15px rgba(227, 6, 19, 0.2);
+}
+.maintenance-box .m-icon { font-size: 20px; animation: pulse 2s infinite; }
+.maintenance-box .m-text { font-size: 14px; font-family: 'Exo 2'; line-height: 1.4; color: #fff; }
+.maintenance-box .m-text strong { font-family: 'Orbitron'; color: #e30613; }
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
 @media (min-width: 900px) {
     #start-container { flex-direction: row; align-items: flex-start; gap: 40px; }
     .header-logo { max-width: 400px; }
@@ -199,6 +222,11 @@ button:hover{background:#ff2a3b;}
     <span class="beta-badge">BETA v2.0.6</span>
 </header>
 <div id="hamburger" onclick="window.ui.toggleMenu()">☰</div>
+
+<div class="maintenance-box">
+    <div class="m-icon">⚠️</div>
+    <div class="m-text"><strong>Wartungsarbeiten:</strong> Am 30.05.2026 um 15:30 Uhr - Update v2.0.7</div>
+</div>
 
 <div id="sideMenu">
  <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.oh.png" alt="GridHub Logo" class="menu-logo">
