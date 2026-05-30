@@ -3,28 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GridHub - Wartungsarbeiten</title>
+<title>Wartungsarbeiten - Simracing Kalender</title>
 
+<meta name="theme-color" content="#e30613">
+<link rel="icon" type="image/png" href="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.png?v=2">
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
-/* GRIDHUB DESIGN-DNA */
+/* BACKGROUND EFFECT FROM ORIGINAL CODE */
 body {
     margin: 0;
     color: #fff;
-    font-family: 'Exo 2';
+    font-family: 'Exo 2', sans-serif;
     overflow: hidden;
+    background: #030303;
+    background-image: 
+        radial-gradient(at 10% 10%, rgba(227, 6, 19, 0.08) 0px, transparent 45%),
+        radial-gradient(at 90% 10%, rgba(30, 30, 35, 0.4) 0px, transparent 50%),
+        radial-gradient(at 90% 90%, rgba(227, 6, 19, 0.06) 0px, transparent 45%),
+        radial-gradient(at 10% 90%, rgba(20, 20, 25, 0.4) 0px, transparent 50%),
+        linear-gradient(135deg, #050505 0%, #121214 50%, #020202 100%);
+    background-attachment: fixed;
     height: 100vh;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-    background: #050505;
-    background-image: 
-        radial-gradient(at 0% 0%, rgba(0, 204, 255, 0.2) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(0, 100, 255, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(0, 204, 255, 0.2) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(0, 80, 200, 0.15) 0px, transparent 50%);
-    background-attachment: fixed;
+    align-items: center;
 }
 
 body::after {
@@ -32,135 +36,231 @@ body::after {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background-image: radial-gradient(circle, #00ccff 1.5px, transparent 1.5px);
-    background-size: 80px 80px;
-    opacity: 0.15;
-    z-index: -1;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.005) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.005) 1px, transparent 1px),
+        radial-gradient(circle, rgba(227, 6, 19, 0.12) 1px, transparent 1.5px);
+    background-size: 40px 40px, 40px 40px, 80px 80px;
+    opacity: 0.8;
+    z-index: -2;
 }
 
+/* ANIMATED PARTICLES */
+@keyframes backgroundFloat {
+    0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.2; }
+    90% { opacity: 0.2; }
+    100% { transform: translateY(-10vh) translateX(50px) rotate(360deg); opacity: 0; }
+}
+.bg-particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+.bg-particles span {
+    position: absolute;
+    display: block;
+    width: 4px; height: 4px;
+    background: #e30613;
+    box-shadow: 0 0 10px #e30613;
+    border-radius: 50%;
+    bottom: -10px;
+    animation: backgroundFloat 25s infinite linear;
+}
+.bg-particles span:nth-child(1) { left: 10%; width: 6px; height: 6px; animation-duration: 22s; animation-delay: 1s; }
+.bg-particles span:nth-child(2) { left: 30%; width: 3px; height: 3px; animation-duration: 28s; animation-delay: 5s; background: #fff; box-shadow: 0 0 8px #fff; }
+.bg-particles span:nth-child(3) { left: 55%; width: 5px; height: 5px; animation-duration: 20s; animation-delay: 0s; }
+.bg-particles span:nth-child(4) { left: 75%; width: 4px; height: 4px; animation-duration: 32s; animation-delay: 7s; }
+.bg-particles span:nth-child(5) { left: 90%; width: 7px; height: 7px; animation-duration: 25s; animation-delay: 3s; }
+
+/* MAINTENANCE WRAPPER */
 .maintenance-container {
     text-align: center;
-    background: rgba(21, 21, 21, 0.9);
-    border: 2px solid #00ccff;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 0 30px rgba(0, 204, 255, 0.2);
-    max-width: 500px;
-    width: 90%;
+    max-width: 600px;
+    padding: 30px;
+    background: #151515;
+    border: 2px solid #e30613;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(227, 6, 19, 0.2);
+    box-sizing: border-box;
+    margin: 20px;
 }
 
-.logo {
+.header-logo {
     max-width: 250px;
-    margin-bottom: 20px;
+    height: auto;
+    margin: 0 auto 20px auto;
+    display: block;
     mix-blend-mode: screen;
+    filter: contrast(115%) brightness(115%);
 }
 
 h1 {
-    font-family: 'Orbitron';
-    color: #00ccff;
+    font-family: 'Orbitron', sans-serif;
+    color: #e30613;
     font-size: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+}
+
+.m-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+    animation: pulse 2s infinite;
+    display: inline-block;
 }
 
 p {
-    color: #ccc;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.6;
+    color: #ccc;
+    margin-bottom: 25px;
 }
 
 /* COUNTDOWN STYLING */
-#countdown {
-    font-family: 'Orbitron';
-    font-size: 32px;
-    color: #fff;
-    margin: 30px 0;
-    text-shadow: 0 0 10px rgba(0, 204, 255, 0.5);
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+.countdown-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 20px;
 }
 
-.time-box {
-    background: #111;
+.cd-item {
+    background: #1a1a1a;
     border: 1px solid #333;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 12px 5px;
+    border-radius: 6px;
     min-width: 70px;
 }
 
-.time-label {
+.cd-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
     display: block;
+}
+
+.cd-label {
     font-size: 10px;
-    color: #00ccff;
+    text-transform: uppercase;
+    color: #e30613;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
     margin-top: 5px;
+    display: block;
 }
 
-.status-indicator {
-    display: inline-block;
-    padding: 5px 15px;
-    background: rgba(255, 165, 0, 0.2);
-    border: 1px solid orange;
-    color: orange;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
+.finished-text {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ff00;
+    font-size: 18px;
+    display: none;
     margin-top: 20px;
-    font-family: 'Orbitron';
+    text-shadow: 0 0 10px rgba(0,255,0,0.3);
 }
 
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 20px; }
+    .cd-number { font-size: 20px; }
+    .cd-label { font-size: 9px; }
+}
 </style>
 </head>
 <body>
 
+<div class="bg-particles">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
 <div class="maintenance-container">
-    <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/gridhub_logo.jpeg" alt="GridHub Logo" class="logo">
+    <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.oh.png" class="header-logo" alt="Logo">
     
-    <h1>Boxenstopp</h1>
-    <p>Wir schrauben gerade am GridHub Kalender, um die Performance zu verbessern. Wir sind bald wieder auf der Strecke!</p>
+    <div class="m-icon">⚠️</div>
+    <h1>Wartungsarbeiten</h1>
+    
+    <p>
+        Wir optimieren den Simracing Kalender für dich!<br>
+        Das System erhält gerade das Update <strong>v2.0.7</strong> und ist in Kürze wieder für Boxenstopps bereit.
+    </p>
 
-    <div id="countdown">
+    <div class="countdown-box" id="countdownBox">
+        <div class="cd-item">
+            <span class="cd-number" id="days">00</span>
+            <span class="cd-label">Tage</span>
         </div>
+        <div class="cd-item">
+            <span class="cd-number" id="hours">00</span>
+            <span class="cd-label">Std</span>
+        </div>
+        <div class="cd-item">
+            <span class="cd-number" id="minutes">00</span>
+            <span class="cd-label">Min</span>
+        </div>
+        <div class="cd-item">
+            <span class="cd-number" id="seconds">00</span>
+            <span class="cd-label">Sek</span>
+        </div>
+    </div>
 
-    <div class="status-indicator">● SYSTEM-WARTUNG AKTIV</div>
+    <div class="finished-text" id="finishedText">
+        🏁 Update abgeschlossen! Seite lädt neu...
+    </div>
 </div>
 
 <script>
-/** * EINSTELLUNGEN 
- * Ändere hier das Datum, bis wann die Wartung gehen soll
- */
-const MAINTENANCE_END = "2026-05-30T16:00:00"; // Format: YYYY-MM-DDTHH:MM:SS
+document.addEventListener("DOMContentLoaded", function() {
+    // --- HIER ZIELZEIT EINSTELLEN ---
+    // Format: "YYYY-MM-DDTHH:MM:SS" (Passend zu deinem Text eingestellt)
+    const TARGET_DATE = new Date("2026-05-30T16:30:00").getTime();
 
-function updateCountdown() {
-    const target = new Date(MAINTENANCE_END).getTime();
-    const now = new Date().getTime();
-    const diff = target - now;
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const difference = TARGET_DATE - now;
 
-    const countdownEl = document.getElementById("countdown");
+        if (difference <= 0) {
+            clearInterval(timerInterval);
+            document.getElementById("countdownBox").style.display = "none";
+            document.getElementById("finishedText").style.display = "block";
+            
+            // Optionaler automatischer Reload, wenn der Timer abgelaufen ist
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+            return;
+        }
 
-    if (diff <= 0) {
-        countdownEl.innerHTML = "BOXENSTOPP BEENDET!";
-        return;
+        // Zeitberechnungen für Tage, Stunden, Minuten und Sekunden
+        const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+        // Werte in HTML schreiben (mit führender Null)
+        document.getElementById("days").innerText = String(d).padStart(2, '0');
+        document.getElementById("hours").innerText = String(h).padStart(2, '0');
+        document.getElementById("minutes").innerText = String(m).padStart(2, '0');
+        document.getElementById("seconds").innerText = String(s).padStart(2, '0');
     }
 
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-    countdownEl.innerHTML = `
-        <div class="time-box">${d}<span class="time-label">TAGE</span></div>
-        <div class="time-box">${h}<span class="time-label">STD</span></div>
-        <div class="time-box">${m}<span class="time-label">MIN</span></div>
-        <div class="time-box">${s}<span class="time-label">SEK</span></div>
-    `;
-}
-
-// Initialer Aufruf und Intervall
-updateCountdown();
-setInterval(updateCountdown, 1000);
+    // Timer sofort einmal ausführen und dann jede Sekunde triggern
+    updateCountdown();
+    const timerInterval = setInterval(updateCountdown, 1000);
+});
 </script>
-
 </body>
 </html>
