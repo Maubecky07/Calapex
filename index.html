@@ -308,6 +308,29 @@ button:hover{background:#ff2a3b;}
     let currentPoll = null;
 
     async function init(){
+        // === ECHTER WARTUNGSMODUS LISTENER (Start) ===
+        try {
+            // 1. Check beim ersten Laden der Seite
+            const { data: statusData } = await db.from('system_status').select('maintenance_mode, maintenance_message').eq('id', 1).single();
+            if (statusData && statusData.maintenance_mode) {
+                document.body.innerHTML = `<div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#030303; color:#e30613; font-family:'Orbitron', sans-serif; text-align:center; padding:20px;"><div><h1>⚠️ SYSTEM OFFLINE</h1><p>${statusData.maintenance_message}</p></div></div>`;
+                return; // Stoppt das weitere Laden der Website komplett!
+            }
+
+            // 2. Live-Überwachung (Schlägt in Millisekunden zu, wenn du im NOC Dashboard klickst)
+            db.channel('system-status-channel')
+              .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'system_status', filter: 'id=eq.1' }, payload => {
+                  if (payload.new.maintenance_mode) {
+                      document.body.innerHTML = `<div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#030303; color:#e30613; font-family:'Orbitron', sans-serif; text-align:center; padding:20px;"><div><h1>⚠️ SYSTEM OFFLINE</h1><p>${payload.new.maintenance_message}</p></div></div>`;
+                  } else {
+                      location.reload(); // Lädt die Seite neu, wenn du den Modus ausschaltest
+                  }
+              }).subscribe();
+        } catch (e) {
+            console.error("Wartungsmodus-Check fehlgeschlagen:", e);
+        }
+        // === ECHTER WARTUNGSMODUS LISTENER (Ende) ===
+
         await loadTeams();
         await loadActivePoll();
         document.getElementById("monthFilter").onchange=(e)=>{selectedMonth=e.target.value; renderEvents();};
