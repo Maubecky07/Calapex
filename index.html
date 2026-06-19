@@ -306,25 +306,26 @@ button:hover{background:#ff2a3b;}
     let isAdmin=false, isRealAdmin=false, isViewer=false, activeNoteId=null;
     let sessionPassword = "";
     let currentPoll = null;
+    let systemStatus = null; // Speichert den Live-Wartungsstatus
 
     async function init(){
         // === ECHTER WARTUNGSMODUS LISTENER (Start) ===
         try {
-            // 1. Check beim ersten Laden der Seite
-            const { data: statusData } = await db.from('system_status').select('maintenance_mode, maintenance_message').eq('id', 1).single();
-            if (statusData && statusData.maintenance_mode) {
-                document.body.innerHTML = `<div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#030303; color:#e30613; font-family:'Orbitron', sans-serif; text-align:center; padding:20px;"><div><h1>⚠️ SYSTEM OFFLINE</h1><p>${statusData.maintenance_message}</p></div></div>`;
-                return; // Stoppt das weitere Laden der Website komplett!
+            const { data: statusData } = await db.from('system_status').select('*').eq('id', 1).single();
+            if (statusData) {
+                systemStatus = statusData; // Speichern für die Render-Funktionen
+                
+                // Globale Wartung: Blockiert die komplette Seite
+                if (statusData.maintenance_mode) {
+                    document.body.innerHTML = `<div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#030303; color:#e30613; font-family:'Orbitron', sans-serif; text-align:center; padding:20px;"><div><h1>⚠️ SYSTEM OFFLINE</h1><p>${statusData.maintenance_message || 'Komplette Wartungsarbeiten. Wir sind gleich zurück.'}</p></div></div>`;
+                    return; // Stoppt das weitere Laden der Website komplett!
+                }
             }
 
-            // 2. Live-Überwachung (Schlägt in Millisekunden zu, wenn du im NOC Dashboard klickst)
+            // Live-Überwachung: Schlägt in Millisekunden zu, wenn du im NOC Dashboard klickst!
             db.channel('system-status-channel')
               .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'system_status', filter: 'id=eq.1' }, payload => {
-                  if (payload.new.maintenance_mode) {
-                      document.body.innerHTML = `<div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#030303; color:#e30613; font-family:'Orbitron', sans-serif; text-align:center; padding:20px;"><div><h1>⚠️ SYSTEM OFFLINE</h1><p>${payload.new.maintenance_message}</p></div></div>`;
-                  } else {
-                      location.reload(); // Lädt die Seite neu, wenn du den Modus ausschaltest
-                  }
+                  location.reload(); // Lädt die Seite bei jeder Änderung des Status (Global oder Einzeln) sofort neu!
               }).subscribe();
         } catch (e) {
             console.error("Wartungsmodus-Check fehlgeschlagen:", e);
@@ -410,11 +411,23 @@ button:hover{background:#ff2a3b;}
 
     function renderTeams(){
         const c=document.getElementById("teamSelection"); c.innerHTML="";
+        
+        // INDIVIDUELLE WARTUNG: Teams
+        if(systemStatus && systemStatus.maint_teams) {
+            c.innerHTML = "<div style='grid-column: 1 / -1; text-align:center; color:#e30613; font-family:Orbitron; padding:20px; background:#151515; border:1px solid #e30613; border-radius:10px;'>⚠️ Die Teamauswahl befindet sich aktuell im Wartungsmodus.</div>";
+            return;
+        }
+
         teams.forEach(t=>{
             let logoURL=null;
-            if(t.logo){ const {data}=db.storage.from('team-logos').getPublicUrl(t.logo); logoURL=data.publicUrl; }
+            // INDIVIDUELLE WARTUNG: CDN (Logos blockieren, Platzhalter anzeigen)
+            if(t.logo && !(systemStatus && systemStatus.maint_cdn)){ 
+                const {data}=db.storage.from('team-logos').getPublicUrl(t.logo); 
+                logoURL=data.publicUrl; 
+            }
+            
             const div=document.createElement("div"); div.className="team-card";
-            div.innerHTML=`${logoURL ? `<img src="${logoURL}">` : ""}<div class="team-name">${t.name}</div>`;
+            div.innerHTML=`${logoURL ? `<img src="${logoURL}">` : `<div style="width:80px;height:80px;margin-bottom:10px;background:#222;border-radius:8px;border:2px dashed #e30613;display:flex;align-items:center;justify-content:center;font-size:10px;color:#e30613;">NO CDN</div>`}<div class="team-name">${t.name}</div>`;
             div.onclick=()=>openLogin(t); c.appendChild(div);
         });
     }
@@ -522,6 +535,13 @@ button:hover{background:#ff2a3b;}
 
     function renderEvents(){
         const c=document.getElementById("calendar"); if(!c) return; c.innerHTML="";
+        
+        // INDIVIDUELLE WARTUNG: Events (Kalender ausblenden)
+        if(systemStatus && systemStatus.maint_events) {
+            c.innerHTML = "<div style='text-align:center; color:#e30613; font-family:Orbitron; padding:20px; background:#151515; border:1px solid #e30613; border-radius:10px;'>⚠️ Der Rennkalender befindet sich aktuell im Wartungsmodus.</div>";
+            return;
+        }
+
         events.filter(e=>{
             if(selectedDriver && !(e.drivers||"").includes(selectedDriver)) return false;
             if(selectedMonth!=="all"){ const d=new Date(e.date); if(d.getMonth()!=selectedMonth) return false; }
@@ -583,6 +603,13 @@ button:hover{background:#ff2a3b;}
 
     function renderDrivers(){
         const c=document.getElementById("driverList"); if(!c) return; c.innerHTML="";
+        
+        // INDIVIDUELLE WARTUNG: Fahrer (Liste ausblenden)
+        if(systemStatus && systemStatus.maint_drivers) {
+            c.innerHTML = "<div style='text-align:center; color:#e30613; font-family:Orbitron; padding:10px; background:#1a1a1a; border-radius:5px; font-size:12px;'>⚠️ Fahrerliste offline (Wartung)</div>";
+            return;
+        }
+
         drivers.forEach(d=>{
             const div = document.createElement("div"); div.className = `driver-container`;
             div.innerHTML = `
