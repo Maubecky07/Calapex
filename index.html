@@ -3,264 +3,1071 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wartungsarbeiten - Simracing Kalender</title>
+<title>Simracing Kalender (Beta)</title>
 
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#e30613">
-<link rel="icon" type="image/png" href="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.png?v=2">
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
+<link rel="icon" type="image/png" href="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
-/* BACKGROUND EFFECT FROM ORIGINAL CODE */
-body {
-    margin: 0;
-    color: #fff;
-    font-family: 'Exo 2', sans-serif;
-    overflow: hidden;
-    background: #030303;
-    background-image: 
-        radial-gradient(at 10% 10%, rgba(227, 6, 19, 0.08) 0px, transparent 45%),
-        radial-gradient(at 90% 10%, rgba(30, 30, 35, 0.4) 0px, transparent 50%),
-        radial-gradient(at 90% 90%, rgba(227, 6, 19, 0.06) 0px, transparent 45%),
-        radial-gradient(at 10% 90%, rgba(20, 20, 25, 0.4) 0px, transparent 50%),
-        linear-gradient(135deg, #050505 0%, #121214 50%, #020202 100%);
-    background-attachment: fixed;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+/* ==========================================================================
+   PROFESSIONAL REDESIGN - VARIABLES & BASE
+   ========================================================================== */
+:root {
+    --bg-main: #0b0b0e;
+    --bg-card: #15151a;
+    --bg-card-hover: #1b1b22;
+    --bg-input: #1a1a21;
+    --primary: #e30613;
+    --primary-hover: #ff2a3b;
+    --text-main: #f1f1f4;
+    --text-muted: #9ca3af;
+    --border: #262630;
+    --border-light: #363644;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 15px rgba(227, 6, 19, 0.3);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --font-head: 'Orbitron', sans-serif;
+    --font-body: 'Exo 2', sans-serif;
 }
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0; color: var(--text-main); font-family: var(--font-body);
+    overflow-x: hidden; background: var(--bg-main); position: relative; line-height: 1.5;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-main); }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
 body::after {
-    content: "";
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.005) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.005) 1px, transparent 1px),
-        radial-gradient(circle, rgba(227, 6, 19, 0.12) 1px, transparent 1.5px);
-    background-size: 40px 40px, 40px 40px, 80px 80px;
-    opacity: 0.8;
-    z-index: -2;
+        radial-gradient(at 0% 0%, rgba(227, 6, 19, 0.04) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(227, 6, 19, 0.04) 0px, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+    z-index: -2; pointer-events: none;
 }
 
-/* ANIMATED PARTICLES */
 @keyframes backgroundFloat {
-    0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.2; }
-    90% { opacity: 0.2; }
-    100% { transform: translateY(-10vh) translateX(50px) rotate(360deg); opacity: 0; }
-}
-.bg-particles {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    overflow: hidden;
-    z-index: -1;
-    pointer-events: none;
-}
-.bg-particles span {
-    position: absolute;
-    display: block;
-    width: 4px; height: 4px;
-    background: #e30613;
-    box-shadow: 0 0 10px #e30613;
-    border-radius: 50%;
-    bottom: -10px;
-    animation: backgroundFloat 25s infinite linear;
-}
-.bg-particles span:nth-child(1) { left: 10%; width: 6px; height: 6px; animation-duration: 22s; animation-delay: 1s; }
-.bg-particles span:nth-child(2) { left: 30%; width: 3px; height: 3px; animation-duration: 28s; animation-delay: 5s; background: #fff; box-shadow: 0 0 8px #fff; }
-.bg-particles span:nth-child(3) { left: 55%; width: 5px; height: 5px; animation-duration: 20s; animation-delay: 0s; }
-.bg-particles span:nth-child(4) { left: 75%; width: 4px; height: 4px; animation-duration: 32s; animation-delay: 7s; }
-.bg-particles span:nth-child(5) { left: 90%; width: 7px; height: 7px; animation-duration: 25s; animation-delay: 3s; }
-
-/* MAINTENANCE WRAPPER */
-.maintenance-container {
-    text-align: center;
-    max-width: 600px;
-    padding: 30px;
-    background: #151515;
-    border: 2px solid #e30613;
-    border-radius: 12px;
-    box-shadow: 0 0 30px rgba(227, 6, 19, 0.2);
-    box-sizing: border-box;
-    margin: 20px;
+    0% { transform: translateY(110vh) translateX(0) scale(1); opacity: 0; }
+    20% { opacity: 0.6; }
+    80% { opacity: 0.4; }
+    100% { transform: translateY(-10vh) translateX(30px) scale(0.5); opacity: 0; }
 }
 
-.header-logo {
-    max-width: 250px;
-    height: auto;
-    margin: 0 auto 20px auto;
-    display: block;
-    mix-blend-mode: screen;
-    filter: contrast(115%) brightness(115%);
-}
+.bg-particles { position: fixed; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
+.bg-particles span { position: absolute; display: block; background: var(--primary); border-radius: 50%; bottom: -10px; filter: blur(1px); animation: backgroundFloat infinite ease-in; }
+.bg-particles span:nth-child(1) { left: 15%; width: 3px; height: 3px; animation-duration: 15s; animation-delay: 0s; box-shadow: 0 0 8px var(--primary); }
+.bg-particles span:nth-child(2) { left: 45%; width: 2px; height: 2px; animation-duration: 22s; animation-delay: 4s; background: #fff; }
+.bg-particles span:nth-child(3) { left: 65%; width: 4px; height: 4px; animation-duration: 18s; animation-delay: 2s; box-shadow: 0 0 10px var(--primary); }
+.bg-particles span:nth-child(4) { left: 85%; width: 2px; height: 2px; animation-duration: 25s; animation-delay: 7s; }
+.bg-particles span:nth-child(5) { left: 25%; width: 5px; height: 5px; animation-duration: 20s; animation-delay: 10s; background: rgba(255,255,255,0.2); }
 
-h1 {
-    font-family: 'Orbitron', sans-serif;
-    color: #e30613;
-    font-size: 24px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+header { padding: 30px 20px 20px; text-align: center; position: relative; z-index: 10; }
+.header-logo { max-width: 280px; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); cursor: pointer; }
+.beta-badge { font-size: 11px; background: linear-gradient(135deg, var(--primary), #a60009); color: #fff; padding: 4px 8px; border-radius: var(--radius-sm); vertical-align: middle; margin-left: 8px; font-weight: 700; font-family: var(--font-body); display: inline-block; box-shadow: 0 2px 4px rgba(227, 6, 19, 0.4); text-transform: uppercase; letter-spacing: 0.5px; }
 
-.m-icon {
-    font-size: 45px;
-    margin-bottom: 15px;
-    animation: pulse 2s infinite;
-    display: inline-block;
-}
+h2, h3 { font-family: var(--font-head); font-weight: 700; margin-top: 0; }
 
-p {
-    font-size: 15px;
-    line-height: 1.6;
-    color: #ccc;
-    margin-bottom: 25px;
-}
+#start-container { display: flex; flex-direction: column; max-width: 1200px; margin: 0 auto; padding: 20px; gap: 20px; }
+.main-wrapper, #gallery-wrapper { display: none; max-width: 1100px; margin: 0 auto; padding: 20px; animation: fadeIn 0.4s ease-out; }
 
-/* COUNTDOWN STYLING */
-.countdown-box {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-top: 20px;
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.cd-item {
-    background: #1a1a1a;
-    border: 1px solid #333;
-    padding: 12px 5px;
-    border-radius: 6px;
-    min-width: 70px;
-}
-
-.cd-number {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: #fff;
-    display: block;
-}
-
-.cd-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    color: #e30613;
-    font-family: 'Orbitron', sans-serif;
-    letter-spacing: 1px;
-    margin-top: 5px;
-    display: block;
-}
-
-.finished-text {
-    font-family: 'Orbitron', sans-serif;
-    color: #00ff00;
-    font-size: 18px;
+/* ECHTER FULLSCREEN WARTUNGSMODUS */
+#maintenance-screen {
     display: none;
-    margin-top: 20px;
-    text-shadow: 0 0 10px rgba(0,255,0,0.3);
+    position: fixed; inset: 0;
+    background: var(--bg-main);
+    z-index: 9999;
+    flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 20px;
 }
+#maintenance-screen.active { display: flex; }
+.glitch-icon {
+    font-size: 80px; margin-bottom: 20px; cursor: pointer; user-select: none;
+    filter: drop-shadow(0 0 20px rgba(227,6,19,0.5));
+    transition: transform 0.1s;
+}
+.glitch-icon:active { transform: scale(0.9); }
 
-@keyframes pulse {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.1); opacity: 0.8; }
-    100% { transform: scale(1); opacity: 1; }
-}
+/* Maint Banners */
+.maint-banner { text-align:center; color:var(--primary); font-family:var(--font-head); padding:15px; background:rgba(227, 6, 19, 0.1); border:1px solid var(--primary); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); margin-bottom: 20px; font-size: 14px; }
+.maint-banner.admin-override { color: #fbbf24; border-color: #fbbf24; background: rgba(251, 191, 36, 0.1); }
+.maint-banner h1 { margin:0 0 5px 0; font-size: 24px; }
+.maint-banner p { margin:0; font-family:var(--font-body); font-weight: 500; }
 
-@media (max-width: 480px) {
-    h1 { font-size: 20px; }
-    .cd-number { font-size: 20px; }
-    .cd-label { font-size: 9px; }
-}
+/* TEAM CARDS */
+.team-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 25px 15px; text-align: center; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; box-shadow: var(--shadow-sm); position: relative; overflow: hidden; }
+.team-card:hover { transform: translateY(-4px); background: var(--bg-card-hover); border-color: var(--primary); box-shadow: var(--shadow-glow); }
+.team-card img { width: 90px; height: 90px; object-fit: contain; margin-bottom: 15px; background: rgba(0, 0, 0, 0.3); border-radius: var(--radius-md); padding: 5px; border: 1px solid var(--border-light); transition: border-color 0.3s ease; }
+.team-card:hover img { border-color: var(--primary); }
+.team-name { font-family: var(--font-head); font-size: 15px; font-weight: 500; letter-spacing: 0.5px; color: var(--text-main); }
+
+/* --- Blocked Team Styles --- */
+.team-card.blocked { border-color: #5a1010; opacity: 0.6; }
+.team-card.blocked:hover { transform: translateY(-4px); box-shadow: 0 0 15px rgba(251, 191, 36, 0.3); background: var(--bg-card-hover); border-color: #fbbf24; }
+.team-card.blocked img { filter: grayscale(100%); }
+.team-card.blocked:hover img { filter: grayscale(0%); border-color: #fbbf24; }
+.blocked-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; font-size: 40px; border-radius: var(--radius-lg); z-index: 5; transition: 0.3s; }
+.team-card.blocked:hover .blocked-overlay { background: rgba(0,0,0,0.4); }
+
+#teamSelection { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; flex-grow: 1; }
+
+.patchlog-start { width: 100%; max-width: 320px; background: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 20px; box-shadow: var(--shadow-sm); }
+.patch-entry { margin-bottom: 15px; font-size: 13px; color: var(--text-muted); }
+.patch-version { color: var(--primary); font-family: var(--font-head); font-size: 14px; font-weight: 700; border-bottom: 1px solid var(--border-light); padding-bottom: 6px; margin-bottom: 10px; display: block; }
+.p-item { margin: 6px 0; line-height: 1.5; padding-left: 10px; position: relative; }
+.p-item::before { content: "•"; position: absolute; left: 0; color: var(--primary); }
+details summary { outline: none; transition: color 0.2s; }
+details summary:hover { color: var(--primary-hover) !important; }
+
+/* EVENTS */
+.event { background: var(--bg-card); border: 1px solid var(--border); margin: 15px 0; padding: 20px; border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s ease; position: relative; display: grid; grid-template-columns: 1fr; gap: 8px; box-shadow: var(--shadow-sm); }
+.event:hover { background: var(--bg-card-hover); border-color: var(--border-light); }
+.event.live { border: 1px solid var(--primary); background: linear-gradient(180deg, rgba(227, 6, 19, 0.05) 0%, var(--bg-card) 100%); box-shadow: 0 0 20px rgba(227, 6, 19, 0.15); }
+.event.cancelled { opacity: 0.6; border-color: #5a1010; }
+.event.past { opacity: 0.6; background: #0f0f12; }
+
+.event-title { font-size: 18px; font-family: var(--font-head); color: var(--text-main); font-weight: 700; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+.event.live .event-title { color: var(--primary); }
+
+.event-row { font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+.event-row strong { color: var(--text-main); font-weight: 500; }
+
+.status-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; border: 1px solid transparent; }
+.status-ok { background: rgba(31, 122, 31, 0.15); color: #4ade80; border-color: rgba(74, 222, 128, 0.3); }
+.status-unclear { background: rgba(179, 139, 0, 0.15); color: #fbbf24; border-color: rgba(251, 191, 36, 0.3); }
+.status-cancelled { background: rgba(179, 0, 0, 0.15); color: #f87171; border-color: rgba(248, 113, 113, 0.3); }
+.status-live { background: rgba(255, 42, 59, 0.15); color: #ff2a3b; border-color: rgba(255, 42, 59, 0.4); animation: pulse 2s infinite; }
+.status-past { background: rgba(85, 85, 85, 0.2); color: #9ca3af; border-color: rgba(156, 163, 175, 0.3); }
+
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 42, 59, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(255, 42, 59, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 42, 59, 0); } }
+.countdown-text { font-family: var(--font-head); font-size: 12px; font-weight: 500; color: var(--primary); background: rgba(227, 6, 19, 0.1); padding: 4px 8px; border-radius: var(--radius-sm); display: inline-block; width: fit-content; margin-bottom: 8px; }
+
+/* INPUTS & BUTTONS */
+button { background: var(--primary); border: none; padding: 12px 20px; cursor: pointer; font-family: var(--font-body); font-weight: 600; color: #fff; border-radius: var(--radius-sm); transition: all 0.2s ease; width: 100%; font-size: 14px; letter-spacing: 0.5px; }
+button:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(227, 6, 19, 0.3); }
+button:active { transform: translateY(1px); }
+
+.note-btn, .stream-link { display: inline-flex; align-items: center; justify-content: center; background: transparent; color: var(--text-main); border: 1px solid var(--border-light); padding: 8px 14px; border-radius: var(--radius-sm); cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 500; transition: all 0.2s; width: auto; text-decoration: none; margin-top: 10px; }
+.note-btn:hover { background: rgba(255,255,255,0.05); border-color: var(--text-main); }
+.stream-link { color: var(--primary); border-color: rgba(227, 6, 19, 0.5); }
+.stream-link:hover { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 2px 10px rgba(227, 6, 19, 0.3); }
+
+input, select, textarea { background: var(--bg-input); border: 1px solid var(--border-light); color: var(--text-main); padding: 12px 14px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 14px; width: 100%; transition: all 0.2s; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.15); }
+
+/* MODALS - HIER WURDE DER Z-INDEX REPARIERT! */
+#overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px); z-index: 10000; }
+#pwdModal, #eventModal, #noteModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--bg-card); padding: 25px; border: 1px solid var(--border); width: 90%; max-width: 420px; z-index: 10001; border-radius: var(--radius-lg); max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-md); }
+.modal-grid { display: grid; gap: 12px; margin-top: 20px; }
+.modal-grid label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; margin-bottom: -6px; }
+#e_notes { height: 180px; resize: vertical; margin-top: 15px; }
+
+/* SIDE MENU */
+#hamburger { position: fixed; top: 20px; right: 20px; font-size: 24px; cursor: pointer; color: var(--text-main); display: none; z-index: 999; background: var(--bg-card); border: 1px solid var(--border-light); width: 44px; height: 44px; line-height: 42px; text-align: center; border-radius: var(--radius-md); transition: all 0.2s; box-shadow: var(--shadow-sm); }
+#hamburger:hover { color: var(--primary); border-color: var(--primary); }
+#sideMenu { position: fixed; top: 0; right: -340px; width: 320px; height: 100%; background: #0f0f13; border-left: 1px solid var(--border); padding: 25px 20px; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 998; overflow-y: auto; box-shadow: -10px 0 30px rgba(0,0,0,0.5); }
+#sideMenu.open { right: 0; }
+.menu-logo { width: 100%; max-width: 180px; margin: 0 auto 30px; display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+
+.driver-container { display: flex; align-items: center; margin: 10px 0; width: 100%; gap: 5px; }
+.driver { flex-grow: 1; padding: 12px 15px; background: var(--bg-input); cursor: pointer; border-radius: var(--radius-sm); transition: all 0.2s; font-size: 14px; font-weight: 500; border: 1px solid var(--border-light); }
+.driver:hover { border-color: var(--primary); background: #202028; }
+.driver.active { background: rgba(227, 6, 19, 0.1); color: var(--primary); border-color: var(--primary); box-shadow: inset 4px 0 0 var(--primary); }
+.delete-driver-btn { background: rgba(255, 69, 58, 0.1); color: #ff453a; padding: 12px; border-radius: var(--radius-sm); cursor: pointer; border: 1px solid rgba(255, 69, 58, 0.3); width: auto; transition: all 0.2s; }
+.delete-driver-btn:hover { background: #ff453a; color: #fff; border-color: #ff453a; }
+.badge-owner { color: #ffd700; margin-left: 6px; font-size: 12px; filter: drop-shadow(0 0 4px rgba(255,215,0,0.4)); }
+
+/* POLL */
+.poll-opt-btn { background: var(--bg-input); border: 1px solid var(--border-light); color: var(--text-main); padding: 12px; margin-bottom: 10px; border-radius: var(--radius-sm); cursor: pointer; text-align: left; font-size: 13px; font-weight: 500; transition: all 0.2s; }
+.poll-opt-btn:hover { border-color: #ffd700; background: rgba(255, 215, 0, 0.05); transform: translateX(2px); }
+.poll-bar-bg { background: var(--border-light); height: 8px; border-radius: 4px; margin: 6px 0 15px 0; overflow: hidden; }
+.poll-bar-fill { background: linear-gradient(90deg, #d4af37, #ffd700); height: 100%; width: 0%; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 0 10px rgba(255,215,0,0.4); }
+
+/* GALLERY */
+.gallery-item { position: relative; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-light); aspect-ratio: 1; background: #000; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gallery-item .del-btn { position: absolute; top: 6px; right: 6px; background: rgba(255, 69, 58, 0.9); color: #fff; border: none; border-radius: 4px; width: 28px; height: 28px; padding: 0; cursor: pointer; font-size: 14px; font-weight: bold; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.gallery-item .del-btn:hover { background: #ff453a; transform: scale(1.1); }
+
+@media (min-width: 900px) { #start-container { flex-direction: row; align-items: flex-start; gap: 30px; padding: 40px 20px; } #teamSelection { grid-template-columns: repeat(3, 1fr); } .header-logo { max-width: 380px; } }
+@media (max-width: 600px) { #teamSelection { grid-template-columns: 1fr; } .event { padding: 15px; } }
 </style>
 </head>
 <body>
 
 <div class="bg-particles">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
+    <span></span><span></span><span></span><span></span><span></span>
 </div>
 
-<div class="maintenance-container">
-    <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.oh.png" class="header-logo" alt="Logo">
-    
-    <div class="m-icon">⚠️</div>
-    <h1>Wartungsarbeiten</h1>
-    
-    <p>
-        Wir optimieren den Simracing Kalender für dich!<br>
-        Das System erhält gerade das Update <strong>v2.0.7</strong> und ist in Kürze wieder für Boxenstopps bereit.
-    </p>
-
-    <div class="countdown-box" id="countdownBox">
-        <div class="cd-item">
-            <span class="cd-number" id="days">00</span>
-            <span class="cd-label">Tage</span>
-        </div>
-        <div class="cd-item">
-            <span class="cd-number" id="hours">00</span>
-            <span class="cd-label">Std</span>
-        </div>
-        <div class="cd-item">
-            <span class="cd-number" id="minutes">00</span>
-            <span class="cd-label">Min</span>
-        </div>
-        <div class="cd-item">
-            <span class="cd-number" id="seconds">00</span>
-            <span class="cd-label">Sek</span>
-        </div>
-    </div>
-
-    <div class="finished-text" id="finishedText">
-        🏁 Update abgeschlossen! Seite lädt neu...
-    </div>
+<div id="maintenance-screen">
+    <div class="glitch-icon" onclick="window.ui.triggerDevPrompt()">⚠️</div>
+    <h1 style="font-family:'Orbitron'; color:var(--primary); margin:0 0 10px 0; font-size: 32px;">SYSTEM OFFLINE</h1>
+    <p style="color:var(--text-muted); max-width: 500px; font-size: 16px;">Die Plattform befindet sich aktuell in umfangreichen Wartungsarbeiten. Der Zugriff ist derzeit für niemanden möglich.</p>
+    <p id="maint-msg-display" style="color:var(--text-main); font-weight:600; margin-top:20px; padding: 10px; background: rgba(227,6,19,0.1); border-radius: 6px; border: 1px solid rgba(227,6,19,0.3); display: none;"></p>
 </div>
 
+<header id="main-header">
+    <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.oh.png" alt="GridHub Logo" class="header-logo" onclick="window.ui.triggerDevPrompt()">
+    <span class="beta-badge">BETA v2.0.8</span>
+</header>
+<div id="hamburger" onclick="window.ui.toggleMenu()">☰</div>
+
+<div id="sideMenu">
+ <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.oh.png" alt="GridHub Logo" class="menu-logo">
+ <h3>Fahrer</h3>
+ <div id="adminDriverSection">
+    <label style="font-size: 10px; color: #e30613; font-family: 'Orbitron';">ADMIN BEREICH</label>
+    <input id="newDriverName" placeholder="Name | Admin" style="width:100%; box-sizing:border-box; margin-bottom:5px; padding:8px; background: #222; color: #fff; border: 1px solid #444;">
+    <button onclick="window.ui.addDriver()">+ Fahrer hinzufügen</button>
+ </div>
+ <button onclick="window.ui.resetDriverFilter()">Alle Fahrer anzeigen</button>
+ <div id="driverList"></div>
+ <div id="adminWebhookSection" style="display:none; border-top:1px solid #e30613; margin-top:20px; padding-top:15px;">
+    <label style="font-size: 10px; color: #e30613; font-family: 'Orbitron'; display:block; margin-bottom:5px;">DISCORD WEBHOOK INTEGRATION</label>
+    <input id="teamWebhookUrl" type="url" placeholder="Discord Webhook URL..." style="width:100%; box-sizing:border-box; margin-bottom:5px; padding:8px; background: #222; color: #fff; border: 1px solid #444; font-size:12px;">
+    <button onclick="window.ui.saveWebhook()">Webhook speichern</button>
+ </div>
+ <div id="galleryMenuSection" style="display:none; border-top:1px solid var(--border); margin-top:20px; padding-top:15px;">
+    <label style="font-size: 10px; color: var(--primary); font-family: var(--font-head); display:block; margin-bottom:5px;">TEAM GALERIE</label>
+    <button onclick="window.ui.openGalleryView()">Galerie ansehen</button>
+ </div>
+</div>
+
+<div id="start-container">
+    <div id="global-maint-banner-container"></div>
+
+    <div style="display: flex; flex-direction: column; width: 100%; max-width: 320px;">
+        <div class="patchlog-start" style="border-color: #ff9800; box-shadow: 0 0 15px rgba(255, 152, 0, 0.15);">
+            <h3 style="font-family:'Orbitron'; color:#ff9800; font-size: 14px; margin-top: 0; display: flex; align-items: center; gap: 8px;">
+                <span>⚠️</span> Wartungsarbeiten
+            </h3>
+            <div style="font-size: 13px; color: #fff; line-height: 1.4; font-weight: 500;">
+                Wartungsarbeiten: Montag 22.06.2026 um 15:30 Uhr -- Update v2.0.8
+            </div>
+        </div>
+
+        <div id="poll-container" class="patchlog-start" style="display:none; border-color: #ffd700; box-shadow: 0 0 15px rgba(255,215,0,0.1);">
+            <h3 style="font-family:'Orbitron'; color:#ffd700; font-size: 14px; margin-top: 0; display: flex; align-items: center; gap: 8px;">
+                <span>📊</span> Blitz-Umfrage
+            </h3>
+            <div id="poll-question" style="font-size: 14px; margin-bottom: 15px; font-weight: bold; color: #fff; line-height: 1.4;"></div>
+            <div id="poll-options"></div>
+            <div id="poll-info" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid #333; padding-top: 8px;">
+                <div id="poll-votes-count" style="font-size: 10px; color: #ffd700; font-family: 'Orbitron';"></div>
+                <div id="poll-timer" style="font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: 1px;"></div>
+            </div>
+        </div>
+
+        <div class="patchlog-start">
+            <details open>
+                <summary style="cursor:pointer; color:#e30613; font-family:'Orbitron'; margin-bottom: 10px;">📦 Patchlog</summary>
+                <div class="patch-entry">
+                    <span class="patch-version">v2.0.8</span>
+                    <div class="p-item">Design der Website modernisiert und optimiert.</div>
+                    <div class="p-item">Galerie-Verwaltung für Teams hinzugefügt (Upload/Löschen von PNG & JPG Bildern exklusiv für Admins).</div>
+                </div>
+                <div class="patch-entry">
+                    <span class="patch-version">v2.0.7</span>
+                    <div class="p-item">Discord-Webhook Integration im Adminbereich unter der Fahrerliste hinzugefügt.</div>
+                    <div class="p-item">Patchlog-Einträge auf normale Zeilen ohne Status-Tags umgestellt.</div>
+                </div>
+            </details>
+        </div>
+    </div>
+    <div id="teamSelection"></div>
+</div>
+
+<div class="main-wrapper">
+ <button onclick="window.ui.back()" style="margin-bottom:10px; width: auto; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main);">⬅ zurück</button>
+ <button id="addEventBtn" onclick="window.ui.openEventModal()" style="display:none; margin-bottom:10px; width: auto; margin-left: 10px;">+ Termin erstellen</button>
+ <h2 id="teamTitle" style="font-family:'Orbitron'; font-size:24px; color: var(--text-main); margin-top: 15px;"></h2>
+ <select id="monthFilter" style="margin-bottom:20px;">
+  <option value="all">Alle Monate</option>
+  <option value="0">Januar</option><option value="1">Februar</option><option value="2">März</option><option value="3">April</option><option value="4">Mai</option><option value="5">Juni</option><option value="6">Juli</option><option value="7">August</option><option value="8">September</option><option value="9">Oktober</option><option value="10">November</option><option value="11">Dezember</option>
+ </select>
+ <div id="calendar"></div>
+</div>
+
+<div id="gallery-wrapper">
+    <button onclick="window.ui.closeGalleryView()" style="margin-bottom:20px; width: auto; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main);">⬅ zurück zum Kalender</button>
+    <h2 style="font-family:'Orbitron'; font-size:24px; color: var(--text-main); margin-top: 0; display: flex; align-items: center; gap: 10px;"><span>🖼️</span> Team Galerie</h2>
+    <div id="galleryUploadContainer" style="margin-bottom: 25px; display: none; gap: 10px; align-items: center; background: var(--bg-card); padding: 15px; border-radius: var(--radius-md); border: 1px solid var(--border);">
+        <input type="file" id="galleryUpload" accept=".png, .jpg, .jpeg" style="flex-grow: 1;">
+        <button onclick="window.ui.uploadImage()" style="width: auto;">Bild hochladen</button>
+    </div>
+    <div id="galleryGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; min-height: 100px;"></div>
+</div>
+
+<div id="overlay" onclick="window.ui.closeAll()"></div>
+
+<div id="pwdModal">
+ <h3 id="pwdTitle" style="font-family:'Orbitron'; color: var(--text-main); margin-bottom: 15px;"></h3>
+ <input type="password" id="pwd" placeholder="Passwort eingeben..." style="margin-bottom: 15px;">
+ <button onclick="window.ui.login()">Login</button>
+</div>
+
+<div id="eventModal">
+ <h3 id="modalHeadline" style="font-family:'Orbitron'; color: var(--text-main);">Event</h3>
+ <div class="modal-grid">
+  <label>Titel</label><input id="e_title">
+  <label>Datum</label><input id="e_date" type="date">
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+    <div><label>Start</label><input id="e_start" type="time"></div>
+    <div><label>Ende</label><input id="e_end" type="time"></div>
+  </div>
+  <label>Strecke</label><input id="e_track">
+  <label>Auto</label><input id="e_vehicle">
+  <label>Fahrer</label><select id="e_drivers" multiple style="height: 100px;"></select>
+  <label>Stream</label><input id="e_stream" placeholder="https://...">
+  <label>Status</label>
+  <select id="e_status">
+   <option value="ok">Findet statt</option>
+   <option value="unclear">Unklar</option>
+   <option value="cancelled">Entfällt</option>
+  </select>
+ </div>
+ <div style="display: flex; gap: 10px; margin-top: 25px;">
+    <button onclick="window.ui.saveEvent()">Speichern</button>
+    <button id="deleteBtn" onclick="window.ui.deleteEvent()" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.3); display:none;">Löschen</button>
+ </div>
+ <button onclick="window.ui.closeAll()" style="background:transparent; border: 1px solid var(--border-light); color: var(--text-muted); margin-top: 10px;">Abbrechen</button>
+</div>
+
+<div id="noteModal">
+    <h3 style="font-family:'Orbitron'; color: var(--text-main); margin:0; display: flex; align-items: center; gap: 8px;"><span>📝</span> Event Notizen</h3>
+    <textarea id="e_notes" placeholder="Hier kannst du Notizen zum Rennen eintragen..."></textarea>
+    <button id="saveNoteBtn" onclick="window.ui.saveNote()" style="margin-top:15px;">Speichern</button>
+    <button onclick="window.ui.closeAll()" style="background:transparent; border: 1px solid var(--border-light); color: var(--text-muted); margin-top:10px;">Schließen</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // --- HIER ZIELZEIT EINSTELLEN ---
-    // Format: "YYYY-MM-DDTHH:MM:SS" (Passend zu deinem Text eingestellt)
-    const TARGET_DATE = new Date("2026-06-22T15:30:00").getTime();
+(function() {
+    const db = supabase.createClient("https://hbuppukuizrnzrhwvfou.supabase.co","sb_publishable_atazSTKWDQ5VMKQqHxO0BA_GoPQzPDX");
 
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const difference = TARGET_DATE - now;
+    let teams=[], events=[], drivers=[], currentTeam=null, selectedDriver=null, selectedMonth="all", editId=null;
+    let isAdmin=false, isRealAdmin=false, isViewer=false, activeNoteId=null;
+    let currentPoll = null;
+    let systemStatus = null; 
 
-        if (difference <= 0) {
-            clearInterval(timerInterval);
-            document.getElementById("countdownBox").style.display = "none";
-            document.getElementById("finishedText").style.display = "block";
+    // === DEIN ENTWICKLER PASSWORT HIER EINTRAGEN ===
+    // Mit diesem Passwort kannst du dich in jedes Team einloggen und umgehst jede Wartungssperre!
+    const DEV_PASSWORT = "Calapex_Dev26"; 
+    let isDeveloper = false; 
+    let sessionPassword = "";
+
+    async function init(){
+        try {
+            const { data: statusData } = await db.from('system_status').select('*').eq('id', 1).single();
+            if (statusData) {
+                systemStatus = statusData; 
+            }
+
+            checkGlobalMaintenance();
+
+            db.channel('security-channel')
+              .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'system_status', filter: 'id=eq.1' }, payload => {
+                  systemStatus = payload.new;
+                  if (systemStatus.maintenance_mode && !isDeveloper) {
+                      currentTeam = null; 
+                  }
+                  checkGlobalMaintenance();
+                  if(!systemStatus.maintenance_mode || isDeveloper) {
+                      if(currentTeam) { renderEvents(); renderDrivers(); loadGallery(); } 
+                      else { loadTeams(); renderTeams(); }
+                  }
+              })
+              .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'teams' }, payload => {
+                  if (currentTeam && payload.new.name === currentTeam.name) {
+                      currentTeam.is_blocked = payload.new.is_blocked;
+                      if (currentTeam.is_blocked && !isDeveloper) {
+                          alert("⛔ ZUGRIFF VERWEIGERT: Wartungsarbeiten aktiv oder Team gesperrt. Zugriff ist nicht möglich.");
+                          location.reload();
+                      }
+                  } 
+                  if(!currentTeam) {
+                      loadTeams();
+                  }
+              }).subscribe();
+        } catch (e) {
+            console.error("System Check fehlgeschlagen:", e);
+        }
+
+        await loadTeams();
+        await loadActivePoll();
+        document.getElementById("monthFilter").onchange=(e)=>{selectedMonth=e.target.value; renderEvents();};
+        setInterval(updateCountdownsOnly, 1000); 
+    }
+
+    function checkGlobalMaintenance() {
+        const maintScreen = document.getElementById('maintenance-screen');
+        const startContainer = document.getElementById('start-container');
+        const mainWrapper = document.querySelector('.main-wrapper');
+        const galleryWrapper = document.getElementById('gallery-wrapper');
+        const mainHeader = document.getElementById('main-header');
+        
+        // Wenn globales Maintenance an ist UND du nicht im geheimen Dev Mode bist -> Blackout!
+        if (systemStatus && systemStatus.maintenance_mode && !isDeveloper) {
+            maintScreen.classList.add('active');
+            startContainer.style.display = 'none';
+            mainWrapper.style.display = 'none';
+            galleryWrapper.style.display = 'none';
+            mainHeader.style.display = 'none';
             
-            // Optionaler automatischer Reload, wenn der Timer abgelaufen ist
-            setTimeout(() => {
-                location.reload();
-            }, 3000);
+            const msgEl = document.getElementById('maint-msg-display');
+            if(systemStatus.maintenance_message) {
+                msgEl.innerText = systemStatus.maintenance_message;
+                msgEl.style.display = "inline-block";
+            } else {
+                msgEl.style.display = "none";
+            }
+            closeAll();
+        } else {
+            // Entweder alles ist normal, ODER du bist im Dev Mode!
+            maintScreen.classList.remove('active');
+            mainHeader.style.display = 'block';
+            if(!currentTeam) {
+                startContainer.style.display = 'flex';
+            }
+        }
+    }
+
+    // DIE GEHEIME TÜR FÜR DEN ENTWICKLER (5x Klicken)
+    let devClicks = 0;
+    let devTimer = null;
+    function triggerDevPrompt() {
+        devClicks++;
+        clearTimeout(devTimer);
+        // Zeitfenster für die 5 Klicks auf 3 Sekunden verlängert
+        devTimer = setTimeout(() => devClicks = 0, 3000); 
+        if(devClicks >= 5) {
+            devClicks = 0;
+            document.getElementById("pwdTitle").innerText = "Entwickler Override"; 
+            document.getElementById("pwd").dataset.mode = "dev";
+            document.getElementById("pwd").value = "";
+            document.getElementById("pwdModal").style.display="block"; 
+            document.getElementById("overlay").style.display="block"; 
+        }
+    }
+
+    async function loadTeams(){ 
+        const {data}=await db.from('teams').select('name, logo, discord_webhook, is_blocked'); 
+        teams=data||[]; 
+        renderTeams(); 
+    }
+
+    async function loadActivePoll() {
+        try {
+            const now = new Date().toISOString();
+            const { data } = await db.from('polls')
+                .select('*')
+                .gt('expires_at', now)
+                .order('expires_at', { ascending: true })
+                .limit(1);
+
+            if (data && data.length > 0) {
+                currentPoll = data[0];
+                renderPoll();
+            }
+        } catch (e) { console.log("Keine Umfrage aktiv."); }
+    }
+
+    function renderPoll() {
+        const container = document.getElementById("poll-container");
+        const qDiv = document.getElementById("poll-question");
+        const oDiv = document.getElementById("poll-options");
+        const tDiv = document.getElementById("poll-timer");
+        const vDiv = document.getElementById("poll-votes-count");
+
+        if(!container || !currentPoll) return;
+
+        container.style.display = "block";
+        qDiv.innerText = currentPoll.question;
+        oDiv.innerHTML = "";
+        
+        const hasVoted = localStorage.getItem(`voted_poll_${currentPoll.id}`);
+        const totalVotes = Object.values(currentPoll.options).reduce((a, b) => a + b, 0);
+
+        for (const [option, count] of Object.entries(currentPoll.options)) {
+            if (!hasVoted) {
+                const btn = document.createElement("div");
+                btn.className = "poll-opt-btn";
+                btn.innerText = option;
+                btn.onclick = () => castVote(option);
+                oDiv.appendChild(btn);
+            } else {
+                const percent = totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 0;
+                oDiv.innerHTML += `
+                    <div style="font-size:12px; margin-top:8px; display:flex; justify-content:space-between;">
+                        <span>${option}</span>
+                        <span style="color:#ffd700; font-weight:bold;">${percent}%</span>
+                    </div>
+                    <div class="poll-bar-bg"><div class="poll-bar-fill" style="width:${percent}%"></div></div>
+                `;
+            }
+        }
+        
+        vDiv.innerText = `Stimmen: ${totalVotes}`;
+        tDiv.innerText = "Endet am: " + new Date(currentPoll.expires_at).toLocaleString();
+    }
+
+    async function castVote(option) {
+        if (!currentPoll) return;
+        currentPoll.options[option] += 1;
+        const { error } = await db.from('polls').update({ options: currentPoll.options }).eq('id', currentPoll.id);
+        if (!error) {
+            localStorage.setItem(`voted_poll_${currentPoll.id}`, "true");
+            renderPoll();
+        }
+    }
+
+    function renderTeams(){
+        const c=document.getElementById("teamSelection"); c.innerHTML="";
+        const bannerContainer = document.getElementById("global-maint-banner-container");
+        
+        if (isDeveloper) {
+            bannerContainer.innerHTML = "<div class='maint-banner admin-override'><h1>🛠️ ENTWICKLER MODUS</h1><p>Du bist als Entwickler eingeloggt. Alle Sperren sind für dich deaktiviert.</p></div>";
+        } else {
+            bannerContainer.innerHTML = "";
+        }
+
+        teams.forEach(t=>{
+            let logoURL=null;
+            if(t.logo && !(systemStatus && systemStatus.maint_cdn)){ 
+                const {data}=db.storage.from('team-logos').getPublicUrl(t.logo); 
+                logoURL=data.publicUrl; 
+            }
+            
+            let isTeamBlocked = t.is_blocked || (systemStatus && systemStatus.maint_teams);
+
+            const div=document.createElement("div"); 
+            div.className= `team-card ${isTeamBlocked && !isDeveloper ? 'blocked' : ''}`;
+            
+            let inner = `${logoURL ? `<img src="${logoURL}">` : `<div style="width:90px;height:90px;margin-bottom:15px;background:rgba(0,0,0,0.3);border-radius:var(--radius-md);border:1px dashed var(--border-light);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--primary);">NO CDN</div>`}<div class="team-name">${t.name}</div>`;
+            
+            if(isTeamBlocked && !isDeveloper) inner += `<div class="blocked-overlay" title="Wartung / Gesperrt">🔒</div>`;
+
+            div.innerHTML= inner;
+            div.onclick=()=>openLogin(t, isTeamBlocked); 
+            c.appendChild(div);
+        });
+    }
+
+    function openLogin(t, isTeamBlocked){ 
+        if (isDeveloper) {
+            currentTeam = t;
+            isAdmin = true;
+            isRealAdmin = true;
+            isViewer = false;
+            sessionPassword = DEV_PASSWORT; 
+            loadData().then(completeLogin);
             return;
         }
 
-        // Zeitberechnungen für Tage, Stunden, Minuten und Sekunden
-        const d = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((difference % (1000 * 60)) / 1000);
+        if(isTeamBlocked) {
+            alert("⛔ ZUGRIFF VERWEIGERT: Wartungsarbeiten aktiv oder Team gesperrt. Zugriff ist nicht möglich.");
+            return;
+        }
 
-        // Werte in HTML schreiben (mit führender Null)
-        document.getElementById("days").innerText = String(d).padStart(2, '0');
-        document.getElementById("hours").innerText = String(h).padStart(2, '0');
-        document.getElementById("minutes").innerText = String(m).padStart(2, '0');
-        document.getElementById("seconds").innerText = String(s).padStart(2, '0');
+        currentTeam=t; 
+        document.getElementById("pwdTitle").innerText = t.name; 
+        document.getElementById("pwdModal").style.display="block"; 
+        document.getElementById("overlay").style.display="block"; 
+        document.getElementById("pwd").dataset.mode = "team";
     }
 
-    // Timer sofort einmal ausführen und dann jede Sekunde triggern
-    updateCountdown();
-    const timerInterval = setInterval(updateCountdown, 1000);
-});
+    async function login(){
+        const inputPwd = document.getElementById("pwd").value;
+        const mode = document.getElementById("pwd").dataset.mode;
+        
+        if (mode === "dev") {
+            if (inputPwd === DEV_PASSWORT) {
+                isDeveloper = true;
+                isAdmin = true;
+                isRealAdmin = true;
+                document.getElementById("pwd").value = "";
+                document.getElementById("pwd").dataset.mode = "";
+                closeAll();
+                checkGlobalMaintenance(); 
+                renderTeams();
+                return;
+            } else {
+                alert("Falscher Override-Code!");
+                return;
+            }
+        }
+
+        const { data, error } = await db.rpc('check_team_access', { input_team_name: currentTeam.name, input_password: inputPwd });
+        
+        if (data && data.length > 0 && data[0].access_granted) {
+            let checkIsAdmin = data[0].is_admin || data[0].is_real_admin;
+            let isGloballyBlocked = systemStatus && (systemStatus.maintenance_mode || systemStatus.maint_teams);
+
+            if ((isGloballyBlocked || currentTeam.is_blocked) && !isDeveloper) {
+                alert("⛔ ZUGRIFF VERWEIGERT: Das System befindet sich im Wartungsmodus. Nur der Entwickler hat Zugang.");
+                return; 
+            }
+
+            sessionPassword = inputPwd;
+            isAdmin = checkIsAdmin; 
+            isRealAdmin = data[0].is_real_admin; 
+            isViewer = data[0].is_viewer; 
+            
+            await loadData(); 
+            completeLogin();
+        } else { 
+            alert("Passwort falsch!"); 
+        }
+    }
+
+    async function verifyAction() {
+        if (isDeveloper) return true; 
+        const { data } = await db.rpc('check_team_access', { input_team_name: currentTeam.name, input_password: sessionPassword });
+        if (!data || !data[0] || !data[0].access_granted || (!data[0].is_admin && !data[0].is_real_admin)) {
+            alert("Sicherheits-Check fehlgeschlagen! Keine Berechtigung.");
+            return false;
+        }
+        return true;
+    }
+
+    async function verifyRealAdminAction() {
+        if (isDeveloper) return true; 
+        const { data } = await db.rpc('check_team_access', { input_team_name: currentTeam.name, input_password: sessionPassword });
+        if (!data || !data[0] || !data[0].access_granted || !data[0].is_real_admin) {
+            alert("Sicherheits-Check fehlgeschlagen! Keine Admin-Berechtigung.");
+            return false;
+        }
+        return true;
+    }
+
+    async function loadData() {
+        const [ev, dr, tm] = await Promise.all([
+            db.from('events').select('*').eq('team', currentTeam.name),
+            db.from('drivers').select('*').eq('team', currentTeam.name).order('name', { ascending: true }),
+            db.from('teams').select('discord_webhook').eq('name', currentTeam.name).single()
+        ]);
+        events = ev.data || [];
+        drivers = dr.data || [];
+        if (tm.data) {
+            currentTeam.discord_webhook = tm.data.discord_webhook;
+        }
+    }
+
+    function completeLogin() {
+        closeAll();
+        document.getElementById("start-container").style.display="none";
+        document.querySelector(".main-wrapper").style.display="block";
+        document.getElementById("hamburger").style.display="block";
+        document.getElementById("teamTitle").innerText=currentTeam.name + (isViewer ? " (Besucher)" : "");
+        document.getElementById("adminDriverSection").style.display = isRealAdmin ? "block" : "none";
+        document.getElementById("addEventBtn").style.display = isAdmin ? "inline-block" : "none";
+        
+        const webSection = document.getElementById("adminWebhookSection");
+        if(webSection) {
+            webSection.style.display = isRealAdmin ? "block" : "none";
+            document.getElementById("teamWebhookUrl").value = currentTeam.discord_webhook || "";
+        }
+
+        const galSection = document.getElementById("galleryMenuSection");
+        if(galSection) {
+            galSection.style.display = "block";
+        }
+
+        renderEvents(); 
+        renderDrivers(); 
+        updateDriverDropdown();
+    }
+
+    function back(){ location.reload(); }
+
+    function getCountdown(targetDate) {
+        const now = new Date().getTime(); const diff = targetDate - now;
+        if (diff <= 0) return null;
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+        return (d > 0 ? d + "d " : "") + h + "h " + m + "m " + s + "s";
+    }
+
+    function updateCountdownsOnly() {
+        events.forEach(e => {
+            const el = document.getElementById(`cd-${e.id}`);
+            if (!el) return;
+            const now = new Date();
+            const start = new Date(e.date + " " + e.start);
+            const end = new Date(e.date + " " + e.end);
+            const isLive = now >= start && now <= end;
+            const isPast = now > end;
+
+            if (isPast || e.status === "cancelled") {
+                el.innerText = "";
+            } else if (isLive) {
+                el.innerText = "Endet in: " + getCountdown(end);
+            } else {
+                el.innerText = "Startet in: " + getCountdown(start);
+            }
+        });
+    }
+
+    function formatDriverName(name) {
+        if (!name) return "";
+        const adminTags = ["| Admin", "| Owner", "| Teamchef"];
+        let isOwner = adminTags.some(tag => name.includes(tag));
+        let cleanName = name;
+        adminTags.forEach(tag => cleanName = cleanName.replace(tag, ""));
+        return cleanName.trim() + (isOwner ? '<span class="badge-owner">👑</span>' : '');
+    }
+
+    function renderEvents(){
+        const c=document.getElementById("calendar"); if(!c) return; c.innerHTML="";
+        
+        let bannerHtml = "";
+        if(systemStatus && systemStatus.maintenance_mode) {
+             bannerHtml = "<div class='maint-banner admin-override'>⚠️ GLOBALE WARTUNG AKTIV: Du befindest dich im Entwickler-Modus. Besucher können nicht auf die Website zugreifen.</div>";
+        } else if(systemStatus && systemStatus.maint_events) {
+            if(!isDeveloper) {
+                c.innerHTML = "<div class='maint-banner'>⚠️ Der Rennkalender befindet sich aktuell im Wartungsmodus. Zugriff nicht möglich.</div>";
+                return;
+            } else {
+                bannerHtml = "<div class='maint-banner admin-override'>🛠️ WARTUNGSMODUS AKTIV: Der Kalender ist für Besucher gesperrt, du bist im Admin-Override Modus.</div>";
+            }
+        }
+        
+        c.innerHTML = bannerHtml; 
+
+        events.filter(e=>{
+            if(selectedDriver && !(e.drivers||"").includes(selectedDriver)) return false;
+            if(selectedMonth!=="all"){ const d=new Date(e.date); if(d.getMonth()!=selectedMonth) return false; }
+            return true;
+        }).sort((a,b) => new Date(a.date+" "+a.start) - new Date(b.date+" "+b.end)).forEach(e=>{
+            const now=new Date(); const start=new Date(e.date+" "+e.start); const end=new Date(e.date+" "+e.end);
+            const isLive = now >= start && now <= end; const isPast = now > end;
+            let label = e.status === "cancelled" ? "ENTFÄLLT" : (isLive ? "LIVE" : (isPast ? "Beendet" : (e.status === "ok" ? "Findet statt" : "Unklar")));
+            let badgeClass = e.status === "cancelled" ? "status-cancelled" : (isLive ? "status-live" : (isPast ? "status-past" : (e.status === "ok" ? "status-ok" : "status-unclear")));
+            const div = document.createElement("div"); div.className = `event ${isLive ? 'live' : ''} ${isPast ? 'past' : ''} ${e.status==='cancelled' ? 'cancelled' : ''}`;
+            
+            div.onclick = (event) => {
+                if(isAdmin && !event.target.closest('.note-btn') && !event.target.closest('.stream-link')) {
+                    openEventModal(e);
+                }
+            };
+            
+            const driverDisplay = (e.drivers || "").split(", ").map(formatDriverName).join(", ");
+
+            div.innerHTML = `
+                <div class="event-title">${e.title}</div>
+                <div id="cd-${e.id}" class="countdown-text"></div>
+                <div class="event-row"><span class="status-badge ${badgeClass}">${label}</span></div>
+                <div class="event-row"><strong>📅 Datum:</strong> ${e.date}</div>
+                <div class="event-row"><strong>🕒 Uhrzeit:</strong> ${e.start} - ${e.end}</div>
+                <div class="event-row"><strong>📍 Strecke:</strong> ${e.track}</div>
+                <div class="event-row"><strong>🏎️ Fahrzeug:</strong> ${e.vehicle}</div>
+                <div class="event-row"><strong>👥 Fahrer:</strong> ${driverDisplay}</div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:5px;">
+                    <button class="note-btn" onclick="window.ui.openNoteModal(event, '${e.id}')">📝 Notizen</button>
+                    ${e.stream ? `<a href="${e.stream}" target="_blank" class="stream-link" onclick="event.stopPropagation()">📺 Zum Stream</a>` : ""}
+                </div>
+            `;
+            c.appendChild(div);
+        });
+        updateCountdownsOnly();
+    }
+
+    function openNoteModal(ev, id) {
+        if(ev) { ev.stopPropagation(); ev.preventDefault(); }
+        activeNoteId = id;
+        const eventObj = events.find(e => String(e.id) === String(id));
+        const textarea = document.getElementById("e_notes");
+        textarea.value = eventObj ? (eventObj.notes || "") : "";
+        textarea.disabled = !isAdmin;
+        document.getElementById("saveNoteBtn").style.display = isAdmin ? "block" : "none";
+        document.getElementById("noteModal").style.display="block";
+        document.getElementById("overlay").style.display="block";
+    }
+
+    async function saveNote(){
+        if(!isAdmin) return;
+        if(!(await verifyAction())) return;
+        const noteText = document.getElementById("e_notes").value;
+        const { error } = await db.from('events').update({ notes: noteText }).eq('id', activeNoteId);
+        if(error) alert("Fehler beim Speichern!");
+        closeAll(); await loadData(); renderEvents();
+    }
+
+    function renderDrivers(){
+        const c=document.getElementById("driverList"); if(!c) return; c.innerHTML="";
+        
+        if(systemStatus && systemStatus.maint_drivers) {
+            if(!isDeveloper) {
+                c.innerHTML = "<div style='text-align:center; color:var(--primary); font-family:var(--font-head); padding:10px; background:var(--bg-input); border-radius:var(--radius-sm); font-size:12px; border:1px solid var(--border-light);'>⚠️ Fahrerliste offline (Wartung). Zugriff nicht möglich.</div>";
+                return;
+            } else {
+                c.innerHTML = "<div style='text-align:center; color:#fbbf24; font-family:var(--font-head); padding:10px; background:rgba(251, 191, 36, 0.1); border-radius:var(--radius-sm); font-size:12px; border:1px solid #fbbf24; margin-bottom:10px;'>🛠️ Fahrerliste für User gesperrt (Entwickler-Modus).</div>";
+            }
+        }
+
+        drivers.forEach(d=>{
+            const div = document.createElement("div"); div.className = `driver-container`;
+            div.innerHTML = `
+                <div class="driver ${selectedDriver === d.name ? 'active' : ''}" onclick="window.ui.selectDriver('${d.name}')">${formatDriverName(d.name)}</div>
+                ${isRealAdmin ? `<button class="delete-driver-btn" onclick="window.ui.deleteDriver('${d.id}')">✕</button>` : ""}
+            `;
+            c.appendChild(div);
+        });
+    }
+
+    async function addDriver(){
+        const name=document.getElementById("newDriverName").value;
+        if(!name || !(await verifyRealAdminAction())) return;
+        await db.from('drivers').insert({name, team: currentTeam.name});
+        document.getElementById("newDriverName").value=""; await loadData(); renderDrivers(); updateDriverDropdown();
+    }
+
+    async function deleteDriver(id){
+        if(!confirm("Fahrer wirklich löschen?") || !(await verifyRealAdminAction())) return;
+        await db.from('drivers').delete().eq('id', id);
+        await loadData(); renderDrivers(); updateDriverDropdown();
+    }
+
+    async function saveWebhook() {
+        if(!isRealAdmin || !(await verifyRealAdminAction())) return;
+        const url = document.getElementById("teamWebhookUrl").value;
+        const { error } = await db.from('teams').update({ discord_webhook: url }).eq('name', currentTeam.name);
+        if(error) {
+            alert("Fehler beim Speichern des Webhooks!");
+        } else {
+            currentTeam.discord_webhook = url;
+            alert("Discord-Webhook erfolgreich aktualisiert!");
+        }
+    }
+
+    function closeAll(){ 
+        document.getElementById("overlay").style.display="none"; 
+        document.getElementById("pwdModal").style.display="none"; 
+        document.getElementById("eventModal").style.display="none"; 
+        document.getElementById("noteModal").style.display="none";
+        document.getElementById("sideMenu").classList.remove("open"); 
+    }
+
+    function openEventModal(eventObj = null) {
+        if(!isAdmin) return;
+        if(eventObj && eventObj.id) {
+            editId = eventObj.id; document.getElementById("modalHeadline").innerText = "Bearbeiten";
+            document.getElementById("e_title").value = eventObj.title; document.getElementById("e_date").value = eventObj.date;
+            document.getElementById("e_start").value = eventObj.start; document.getElementById("e_end").value = eventObj.end;
+            document.getElementById("e_track").value = eventObj.track; document.getElementById("e_vehicle").value = eventObj.vehicle;
+            document.getElementById("e_stream").value = eventObj.stream; document.getElementById("e_status").value = eventObj.status;
+            const sel = document.getElementById("e_drivers");
+            const activeDr = (eventObj.drivers || "").split(", ");
+            Array.from(sel.options).forEach(o => o.selected = activeDr.includes(o.value));
+            document.getElementById("deleteBtn").style.display = "block";
+        } else {
+            editId = null; document.getElementById("modalHeadline").innerText = "Neues Event";
+            document.querySelectorAll("#eventModal input").forEach(i => i.value = "");
+            document.getElementById("e_status").value = "ok";
+            document.getElementById("deleteBtn").style.display = "none";
+        }
+        document.getElementById("eventModal").style.display="block"; document.getElementById("overlay").style.display="block";
+    }
+
+    function openGalleryView() {
+        document.querySelector(".main-wrapper").style.display = "none";
+        document.getElementById("gallery-wrapper").style.display = "block";
+        document.getElementById("sideMenu").classList.remove("open");
+        
+        document.getElementById("galleryUploadContainer").style.display = isRealAdmin ? "flex" : "none";
+        loadGallery();
+    }
+
+    function closeGalleryView() {
+        document.getElementById("gallery-wrapper").style.display = "none";
+        document.querySelector(".main-wrapper").style.display = "block";
+    }
+
+    async function loadGallery() {
+        if(!currentTeam) return;
+        const grid = document.getElementById('galleryGrid');
+        
+        if(systemStatus && systemStatus.maint_cdn) {
+            if(!isDeveloper) {
+                grid.innerHTML = '<div style="color:var(--primary); font-size:14px; grid-column: 1 / -1; font-family:var(--font-head); text-align:center; padding: 20px; background: var(--bg-card); border: 1px solid var(--primary); border-radius: var(--radius-md);">⚠️ Bilder-Server (CDN) ist im Wartungsmodus. Galerie nicht verfügbar.</div>';
+                document.getElementById("galleryUploadContainer").style.display = "none";
+                return;
+            } else {
+                grid.innerHTML = '<div class="maint-banner admin-override" style="grid-column: 1 / -1;">🛠️ CDN Wartung aktiv: Galerie für User gesperrt (Entwickler-Modus).</div>';
+            }
+        } else {
+            grid.innerHTML = '';
+        }
+
+        grid.innerHTML += '<div style="color:var(--text-muted); font-size:13px; grid-column: 1 / -1;">Lade Bilder...</div>';
+        
+        const { data, error } = await db.storage.from('gallery').list(currentTeam.name + '/', { limit: 100 });
+        if (error) { 
+            grid.innerHTML = '<div style="color:#ff453a; font-size:13px; grid-column: 1 / -1;">Fehler beim Laden der Galerie.</div>'; 
+            return; 
+        }
+        
+        if(systemStatus && systemStatus.maint_cdn && isDeveloper) {
+            grid.innerHTML = '<div class="maint-banner admin-override" style="grid-column: 1 / -1;">🛠️ CDN Wartung aktiv: Galerie für User gesperrt (Entwickler-Modus).</div>';
+        } else {
+            grid.innerHTML = '';
+        }
+
+        const validFiles = data.filter(file => !file.name.startsWith('.'));
+        
+        if(!validFiles || validFiles.length === 0) { 
+            grid.innerHTML += '<div style="color:var(--text-muted); font-size:13px; grid-column: 1 / -1;">Keine Bilder vorhanden.</div>'; 
+            return; 
+        }
+        
+        validFiles.forEach(file => {
+            const { data: urlData } = db.storage.from('gallery').getPublicUrl(currentTeam.name + '/' + file.name);
+            const div = document.createElement('div');
+            div.className = 'gallery-item';
+            
+            const delBtn = isRealAdmin ? `<button class="del-btn" onclick="window.ui.deleteImage('${file.name}')">✕</button>` : '';
+            
+            div.innerHTML = `
+                <img src="${urlData.publicUrl}" alt="${file.name}">
+                ${delBtn}
+            `;
+            grid.appendChild(div);
+        });
+    }
+
+    async function uploadImage() {
+        if(!isRealAdmin || !(await verifyRealAdminAction())) return;
+        const fileInput = document.getElementById('galleryUpload');
+        const file = fileInput.files[0];
+        
+        if (!file) { alert("Bitte wähle zuerst ein Bild aus!"); return; }
+        
+        if (!['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
+            alert("Fehler: Nur PNG und JPG Dateien sind erlaubt!"); return;
+        }
+        
+        const fileName = Date.now() + "_" + file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+        const path = currentTeam.name + '/' + fileName;
+        
+        const { error } = await db.storage.from('gallery').upload(path, file);
+        if (error) { alert("Fehler beim Hochladen: " + error.message); return; }
+        
+        fileInput.value = ""; 
+        await loadGallery(); 
+    }
+
+    async function deleteImage(fileName) {
+        if(!isRealAdmin || !(await verifyRealAdminAction())) return;
+        if(!confirm("Möchtest du dieses Bild wirklich löschen?")) return;
+        
+        const path = currentTeam.name + '/' + fileName;
+        const { error } = await db.storage.from('gallery').remove([path]);
+        
+        if (error) { alert("Fehler beim Löschen des Bildes!"); return; }
+        await loadGallery();
+    }
+
+    async function sendDiscordNotification(eventData, isNew) {
+        if (!currentTeam || !currentTeam.discord_webhook) return;
+        
+        let statusLabel = "Findet statt";
+        if (eventData.status === "unclear") statusLabel = "Unklar";
+        if (eventData.status === "cancelled") statusLabel = "Entfällt";
+
+        const titlePrefix = isNew ? "🆕 Neuer Termin erstellt!" : "🔄 Termin aktualisiert!";
+        const embedColor = eventData.status === "cancelled" ? 11730944 : (isNew ? 1931776 : 14878227); 
+
+        const payload = {
+            embeds: [{
+                title: `${titlePrefix} - ${eventData.title}`,
+                color: embedColor,
+                fields: [
+                    { name: "📅 Datum", value: eventData.date || "-", inline: true },
+                    { name: "🕒 Uhrzeit", value: `${eventData.start || "-"} - ${eventData.end || "-"}`, inline: true },
+                    { name: "📍 Strecke", value: eventData.track || "-", inline: true },
+                    { name: "🏎️ Fahrzeug", value: eventData.vehicle || "-", inline: true },
+                    { name: "👥 Fahrer", value: eventData.drivers || "Keine angegeben", inline: true },
+                    { name: "📢 Status", value: statusLabel, inline: true }
+                ],
+                footer: { text: `Team: ${currentTeam.name}` },
+                timestamp: new Date().toISOString()
+            }]
+        };
+
+        if (eventData.stream) {
+            payload.embeds[0].fields.push({ name: "📺 Stream", value: `[Zum Stream](${eventData.stream})`, inline: false });
+        }
+
+        try {
+            await fetch(currentTeam.discord_webhook, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+        } catch (e) {
+            console.error("Fehler beim Senden an Discord Webhook:", e);
+        }
+    }
+
+    async function saveEvent(){
+        if(!isAdmin || !(await verifyAction())) return;
+        const sel = document.getElementById("e_drivers");
+        const selectedDr = Array.from(sel.selectedOptions).map(o => o.value).join(", ");
+        const eventData = {
+            title: document.getElementById("e_title").value, date: document.getElementById("e_date").value,
+            start: document.getElementById("e_start").value, end: document.getElementById("e_end").value,
+            track: document.getElementById("e_track").value, vehicle: document.getElementById("e_vehicle").value,
+            drivers: selectedDr, stream: document.getElementById("e_stream").value, 
+            status: document.getElementById("e_status").value, team: currentTeam.name
+        };
+        
+        const isNew = !editId;
+        if(editId) await db.from('events').update(eventData).eq('id', editId);
+        else await db.from('events').insert(eventData);
+        
+        await sendDiscordNotification(eventData, isNew);
+        closeAll(); await loadData(); renderEvents();
+    }
+
+    async function deleteEvent() {
+        if(!isAdmin || !editId || !confirm("Löschen?") || !(await verifyAction())) return;
+        await db.from('events').delete().eq('id', editId);
+        closeAll(); await loadData(); renderEvents();
+    }
+
+    function updateDriverDropdown() {
+        const select = document.getElementById("e_drivers"); if(!select) return; select.innerHTML = "";
+        drivers.forEach(d => {
+            const opt = document.createElement("option"); opt.value = d.name; opt.innerText = d.name.replace("| Admin", "").replace("| Owner", "").replace("| Teamchef", "").trim(); 
+            select.appendChild(opt);
+        });
+    }
+
+    window.ui = {
+        login, toggleMenu: () => document.getElementById("sideMenu").classList.toggle("open"),
+        closeAll, back, openEventModal, saveEvent, deleteEvent, openNoteModal, saveNote,
+        addDriver, deleteDriver, saveWebhook, openGalleryView, closeGalleryView, uploadImage, deleteImage,
+        triggerDevPrompt, 
+        selectDriver: (name) => { selectedDriver = (selectedDriver === name) ? null : name; renderDrivers(); renderEvents(); },
+        resetDriverFilter: () => { selectedDriver=null; renderDrivers(); renderEvents(); }
+    };
+
+    window.onload = init;
+})();
 </script>
 </body>
 </html>
