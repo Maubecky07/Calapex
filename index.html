@@ -3,23 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simracing Kalender (Beta)</title>
+<title>Wartungsarbeiten - Simracing Kalender</title>
 
-<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#e30613">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-<link rel="icon" type="image/png" href="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.png">
-
+<link rel="icon" type="image/png" href="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.png?v=2">
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
 <style>
-/* HINTERGRUND-EFFEKT (Vielseitiger, dezenteres Rot, lebendig) */
+/* BACKGROUND EFFECT FROM ORIGINAL CODE */
 body {
     margin: 0;
     color: #fff;
-    font-family: 'Exo 2';
-    overflow-x: hidden;
+    font-family: 'Exo 2', sans-serif;
+    overflow: hidden;
     background: #030303;
     background-image: 
         radial-gradient(at 10% 10%, rgba(227, 6, 19, 0.08) 0px, transparent 45%),
@@ -28,10 +24,13 @@ body {
         radial-gradient(at 10% 90%, rgba(20, 20, 25, 0.4) 0px, transparent 50%),
         linear-gradient(135deg, #050505 0%, #121214 50%, #020202 100%);
     background-attachment: fixed;
-    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Subtiles Racing-Grid & Punkte-Matrix */
 body::after {
     content: "";
     position: fixed;
@@ -46,14 +45,13 @@ body::after {
     z-index: -2;
 }
 
-/* ANIMIERTES LEBENDIGES ELEMENT (Schwebende Racing-Partikel im Hintergrund) */
+/* ANIMATED PARTICLES */
 @keyframes backgroundFloat {
     0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
     10% { opacity: 0.2; }
     90% { opacity: 0.2; }
     100% { transform: translateY(-10vh) translateX(50px) rotate(360deg); opacity: 0; }
 }
-
 .bg-particles {
     position: fixed;
     top: 0; left: 0;
@@ -76,112 +74,107 @@ body::after {
 .bg-particles span:nth-child(2) { left: 30%; width: 3px; height: 3px; animation-duration: 28s; animation-delay: 5s; background: #fff; box-shadow: 0 0 8px #fff; }
 .bg-particles span:nth-child(3) { left: 55%; width: 5px; height: 5px; animation-duration: 20s; animation-delay: 0s; }
 .bg-particles span:nth-child(4) { left: 75%; width: 4px; height: 4px; animation-duration: 32s; animation-delay: 7s; }
-.bg-particles span:nth-child(5) { left: 90%; width: 7px; height: 7px; animation-duration: 25s; animation-delay: 3s; background: #333; box-shadow: none; }
+.bg-particles span:nth-child(5) { left: 90%; width: 7px; height: 7px; animation-duration: 25s; animation-delay: 3s; }
 
-/* ORIGINAL STYLING GRÖSSEN */
-header{padding:20px;text-align:center;font-family:'Orbitron';word-wrap:break-word;}
-.header-logo { max-width: 300px; height: auto; display: block; margin: 0 auto; mix-blend-mode: screen; filter: contrast(115%) brightness(115%); background-color: transparent; }
-.beta-badge{font-size:10px;background:#e30613;color:#fff;padding:2px 6px;border-radius:4px;vertical-align:middle;margin-left:5px;font-weight:900;display:inline-block;}
-
-#start-container{display:flex; flex-direction:column; max-width:1200px; margin:auto; padding:15px; box-sizing:border-box;}
-#teamSelection{display:grid;grid-template-columns:repeat(3, 1fr);gap:15px; flex-grow:1;}
-
-.team-card{background:#151515;border:2px solid #e30613;border-radius:10px;padding:15px;text-align:center;cursor:pointer;transition:.3s;display:flex;flex-direction:column;align-items:center;box-sizing:border-box;}
-.team-card:hover{transform:translateY(-5px); background:#1a1a1a;}
-.team-card img{width:80px;height:80px;object-fit:contain;margin-bottom:10px;background:#111;border-radius:8px;border:2px solid #e30613;}
-.team-name{font-family:'Orbitron';margin-top:10px;font-size:14px;}
-
-.main-wrapper{display:none;max-width:1000px;margin:auto;padding:15px;box-sizing:border-box;}
-.event{background:#151515;border-left:5px solid #e30613;margin:10px 0;padding:15px;border-radius:6px;cursor:pointer;transition:0.2s;word-wrap:break-word;position:relative;}
-.event:hover{background:#1a1a1a;}
-.event.live{border-left:5px solid #e30613;box-shadow:0 0 20px #e30613;}
-.event.cancelled{opacity:0.5;border-left:5px solid #ff0000;}
-.event.past{opacity:0.6;border-left:5px solid #555;}
-.event-title{font-size:16px;font-family:'Orbitron';color:#e30613;margin-bottom:8px;}
-.event-row{display:block;margin:6px 0;font-size:14px;}
-.status-badge{padding:4px 10px;border-radius:5px;font-size:11px;font-weight:bold;display:inline-block;}
-.status-ok{background:#1f7a1f;color:#fff;}
-.status-unclear{background:#b38b00;color:#000;}
-.status-cancelled{background:#b30000;color:#fff;}
-.status-live{background:#ff2a3b;color:#fff;}
-.status-past{background:#555555;color:#ccc;}
-.countdown-text{font-family:'Orbitron';font-size:12px;color:#ff2a3b;margin-bottom:5px;}
-
-/* KOMPAKTER NOTIZBUTTON */
-.note-btn {
-    display: inline-block; margin-top: 10px; background: transparent; color: #e30613; 
-    border: 1px solid #e30613; padding: 6px 12px; border-radius: 4px; 
-    cursor: pointer; font-family: 'Orbitron'; font-size: 11px; transition: 0.3s;
-    width: auto; 
+/* MAINTENANCE WRAPPER */
+.maintenance-container {
+    text-align: center;
+    max-width: 600px;
+    padding: 30px;
+    background: #151515;
+    border: 2px solid #e30613;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(227, 6, 19, 0.2);
+    box-sizing: border-box;
+    margin: 20px;
 }
-.note-btn:hover { background: #e30613; color: #fff; }
 
-.stream-link{display:inline-block;margin-top:10px;color:#ff2a3b;text-decoration:none;border:1px solid #ff2a3b;padding:5px 10px;border-radius:4px;transition:0.3s;font-size:13px; width: auto;}
-.stream-link:hover{background:#ff2a3b;color:#fff;}
+.header-logo {
+    max-width: 250px;
+    height: auto;
+    margin: 0 auto 20px auto;
+    display: block;
+    mix-blend-mode: screen;
+    filter: contrast(115%) brightness(115%);
+}
 
-button{background:#e30613;border:none;padding:12px;cursor:pointer;font-family:'Orbitron';margin-top:5px;color:#fff;font-weight:bold;width:100%;box-sizing:border-box;font-size:14px;}
-button:hover{background:#ff2a3b;}
-#hamburger{position:fixed;top:15px;right:15px;font-size:28px;cursor:pointer;color:#e30613;display:none;z-index:999;background:rgba(11,11,11,0.8);padding:5px;border-radius:5px;}
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    color: #e30613;
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-#sideMenu{position:fixed;top:0;right:-320px;width:300px;height:100%;background:#111;border-left:2px solid #e30613;padding:20px;transition:0.3s;z-index:998;overflow-y:auto;box-sizing:border-box;}
-#sideMenu.open{right:0;}
-.menu-logo{width:100%;max-width:150px;margin:0 auto 20px auto;display:block;mix-blend-mode:screen;filter: contrast(115%) brightness(115%); background-color: transparent;}
+.m-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+    animation: pulse 2s infinite;
+    display: inline-block;
+}
 
-/* FAHRER-LISTE & LÖSCHEN */
-.driver-container{display:flex; align-items:center; margin:8px 0; width: 100%;}
-.driver{flex-grow:1; padding:10px 12px; background:#1a1a1a; cursor:pointer; border-radius:5px 0 0 5px; transition:0.2s; font-size:14px; line-height:1.4; word-wrap:break-word; border:1px solid transparent;}
-.driver.active{background:#e30613; color:#fff; font-weight:bold; border:1px solid #e30613;}
-.driver:only-child { border-radius: 5px; }
+p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #ccc;
+    margin-bottom: 25px;
+}
 
-.delete-driver-btn{background:#b30000; color:#fff; padding:10px 12px; border-radius:0 5px 5px 0; font-family:'Arial'; cursor:pointer; font-weight: bold; border: none; width: auto; margin: 0;}
+/* COUNTDOWN STYLING */
+.countdown-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
 
-.badge-owner { color: #ffd700; margin-left: 5px; filter: drop-shadow(0 0 2px rgba(255,215,0,0.5)); }
+.cd-item {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    padding: 12px 5px;
+    border-radius: 6px;
+    min-width: 70px;
+}
 
-#overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);z-index:1000;}
-#pwdModal,#eventModal,#noteModal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;padding:20px;border:2px solid #e30613;width:90%;max-width:380px;z-index:1001;border-radius:10px;max-height:90vh;overflow-y:auto;box-sizing:border-box;}
-
-#e_notes{
-    width: 100%; 
-    height: 200px; 
-    background: #222; 
-    color: #fff; 
-    border: 1px solid #444; 
-    padding: 10px; 
-    margin-top: 10px; 
-    border-radius: 5px; 
-    font-family: 'Exo 2'; 
-    resize: none;
-    box-sizing: border-box; 
+.cd-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
     display: block;
 }
 
-.modal-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:15px;}
-.modal-grid label{font-size:12px;color:#e30613;margin-bottom:-5px;font-family:'Orbitron';}
-.modal-grid input,.modal-grid select{background:#222;border:1px solid #444;color:#fff;padding:10px;border-radius:4px;font-family:'Exo 2';width:100%;box-sizing:border-box;font-size:14px;}
-#adminDriverSection{display:none;border-bottom:1px solid #e30613;padding-bottom:10px;margin-bottom:10px;}
-
-/* PATCHLOG ORIGINAL */
-.patchlog-start{width: 100%; max-width:320px; background:#151515; border:2px solid #333; padding:15px; border-radius:10px; margin-bottom: 20px; box-sizing:border-box;}
-.patch-entry { margin-bottom: 15px; font-size: 13px; }
-.patch-version { color: #e30613; font-family: 'Orbitron'; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 3px; margin-bottom: 8px; display: block; }
-.p-tag { font-size: 9px; font-weight: 900; padding: 2px 4px; border-radius: 3px; margin-right: 5px; display: inline-block; min-width: 45px; text-align: center; }
-.p-neu { background: #00ff00; color: #000; }
-.p-fix { background: #ff0000; color: #fff; }
-.p-change { background: #e30613; color: #fff; }
-.p-item { margin: 4px 0; color: #ccc; line-height: 1.4; }
-
-/* UMFRAGE BOX STYLING */
-.poll-opt-btn { background: #222; border: 1px solid #444; color: #fff; padding: 10px; margin-bottom: 8px; border-radius: 4px; cursor: pointer; text-align: left; font-size: 12px; transition: 0.2s; font-family: 'Exo 2'; }
-.poll-opt-btn:hover { border-color: #ffd700; background: #2a2a2a; }
-.poll-bar-bg { background: #333; height: 10px; border-radius: 5px; margin: 4px 0 12px 0; overflow: hidden; }
-.poll-bar-fill { background: #ffd700; height: 100%; width: 0%; transition: width 0.6s ease-out; box-shadow: 0 0 10px rgba(255,215,0,0.3); }
-
-@media (min-width: 900px) {
-    #start-container { flex-direction: row; align-items: flex-start; gap: 40px; }
-    .header-logo { max-width: 400px; }
-    .team-card img { width: 120px; height: 120px; }
+.cd-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #e30613;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+    margin-top: 5px;
+    display: block;
 }
-@media (max-width: 600px) { #teamSelection{grid-template-columns: 1fr;} }
+
+.finished-text {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ff00;
+    font-size: 18px;
+    display: none;
+    margin-top: 20px;
+    text-shadow: 0 0 10px rgba(0,255,0,0.3);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 20px; }
+    .cd-number { font-size: 20px; }
+    .cd-label { font-size: 9px; }
+}
 </style>
 </head>
 <body>
@@ -194,593 +187,80 @@ button:hover{background:#ff2a3b;}
     <span></span>
 </div>
 
-<header>
-    <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.oh.png" alt="GridHub Logo" class="header-logo">
-    <span class="beta-badge">BETA v2.0.7</span>
-</header>
-<div id="hamburger" onclick="window.ui.toggleMenu()">☰</div>
+<div class="maintenance-container">
+    <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.oh.png" class="header-logo" alt="Logo">
+    
+    <div class="m-icon">⚠️</div>
+    <h1>Wartungsarbeiten</h1>
+    
+    <p>
+        Wir optimieren den Simracing Kalender für dich!<br>
+        Das System erhält gerade das Update <strong>v2.0.7</strong> und ist in Kürze wieder für Boxenstopps bereit.
+    </p>
 
-<div id="sideMenu">
- <img src="https://hbuppukuizrnzrhwvfou.supabase.co/storage/v1/object/public/team-logos/Calapex_Logo.oh.png" alt="GridHub Logo" class="menu-logo">
- <h3>Fahrer</h3>
- <div id="adminDriverSection">
-    <label style="font-size: 10px; color: #e30613; font-family: 'Orbitron';">ADMIN BEREICH</label>
-    <input id="newDriverName" placeholder="Name | Admin" style="width:100%; box-sizing:border-box; margin-bottom:5px; padding:8px; background: #222; color: #fff; border: 1px solid #444;">
-    <button onclick="window.ui.addDriver()">+ Fahrer hinzufügen</button>
- </div>
- <button onclick="window.ui.resetDriverFilter()">Alle Fahrer anzeigen</button>
- <div id="driverList"></div>
- <div id="adminWebhookSection" style="display:none; border-top:1px solid #e30613; margin-top:20px; padding-top:15px;">
-    <label style="font-size: 10px; color: #e30613; font-family: 'Orbitron'; display:block; margin-bottom:5px;">DISCORD WEBHOOK INTEGRATION</label>
-    <input id="teamWebhookUrl" type="url" placeholder="Discord Webhook URL..." style="width:100%; box-sizing:border-box; margin-bottom:5px; padding:8px; background: #222; color: #fff; border: 1px solid #444; font-size:12px;">
-    <button onclick="window.ui.saveWebhook()">Webhook speichern</button>
- </div>
-</div>
-
-<div id="start-container">
-    <div style="display: flex; flex-direction: column; width: 100%; max-width: 320px;">
-        
-        <div class="patchlog-start" style="border-color: #ff9800; box-shadow: 0 0 15px rgba(255, 152, 0, 0.15);">
-            <h3 style="font-family:'Orbitron'; color:#ff9800; font-size: 14px; margin-top: 0; display: flex; align-items: center; gap: 8px;">
-                <span>⚠️</span> Wartungsarbeiten
-            </h3>
-            <div style="font-size: 13px; color: #fff; line-height: 1.4; font-weight: 500;">
-                Wartungsarbeiten: Montag 22.06.2026 um 15:00 Uhr -- Update v2.0.8
-            </div>
+    <div class="countdown-box" id="countdownBox">
+        <div class="cd-item">
+            <span class="cd-number" id="days">00</span>
+            <span class="cd-label">Tage</span>
         </div>
-
-        <div id="poll-container" class="patchlog-start" style="display:none; border-color: #ffd700; box-shadow: 0 0 15px rgba(255,215,0,0.1);">
-            <h3 style="font-family:'Orbitron'; color:#ffd700; font-size: 14px; margin-top: 0; display: flex; align-items: center; gap: 8px;">
-                <span>📊</span> Blitz-Umfrage
-            </h3>
-            <div id="poll-question" style="font-size: 14px; margin-bottom: 15px; font-weight: bold; color: #fff; line-height: 1.4;"></div>
-            <div id="poll-options"></div>
-            <div id="poll-info" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid #333; padding-top: 8px;">
-                <div id="poll-votes-count" style="font-size: 10px; color: #ffd700; font-family: 'Orbitron';"></div>
-                <div id="poll-timer" style="font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: 1px;"></div>
-            </div>
+        <div class="cd-item">
+            <span class="cd-number" id="hours">00</span>
+            <span class="cd-label">Std</span>
         </div>
-
-        <div class="patchlog-start">
-            <details open>
-                <summary style="cursor:pointer; color:#e30613; font-family:'Orbitron'; margin-bottom: 10px;">📦 Patchlog</summary>
-                
-                <div class="patch-entry">
-                    <span class="patch-version">v2.0.7</span>
-                    <div class="p-item">Discord-Webhook Integration im Adminbereich unter der Fahrerliste hinzugefügt (Jedes Team mit eigener URL gekoppelt an die Spalte discord_webhook).</div>
-                    <div class="p-item">Patchlog-Einträge auf normale Zeilen ohne Status-Tags umgestellt und ältere Versionen entfernt.</div>
-                </div>
-            </details>
+        <div class="cd-item">
+            <span class="cd-number" id="minutes">00</span>
+            <span class="cd-label">Min</span>
+        </div>
+        <div class="cd-item">
+            <span class="cd-number" id="seconds">00</span>
+            <span class="cd-label">Sek</span>
         </div>
     </div>
-    <div id="teamSelection"></div>
+
+    <div class="finished-text" id="finishedText">
+        🏁 Update abgeschlossen! Seite lädt neu...
+    </div>
 </div>
 
-<div class="main-wrapper">
- <button onclick="window.ui.back()" style="margin-bottom:10px;">⬅ zurück</button>
- <button id="addEventBtn" onclick="window.ui.openEventModal()" style="display:none; margin-bottom:10px;">+ Termin erstellen</button>
- <h2 id="teamTitle" style="font-family:'Orbitron'; font-size:20px; color:#e30613;"></h2>
- <select id="monthFilter" style="padding:12px; background:#151515; color:#fff; border:1px solid #e30613; width:100%; margin-bottom:15px;">
-  <option value="all">Alle Monate</option>
-  <option value="0">Januar</option><option value="1">Februar</option><option value="2">März</option><option value="3">April</option><option value="4">Mai</option><option value="5">Juni</option><option value="6">Juli</option><option value="7">August</option><option value="8">September</option><option value="9">Oktober</option><option value="10">November</option><option value="11">Dezember</option>
- </select>
- <div id="calendar"></div>
-</div>
-
-<div id="overlay" onclick="window.ui.closeAll()"></div>
-
-<div id="pwdModal">
- <h3 id="pwdTitle" style="font-family:'Orbitron'; color:#e30613;"></h3>
- <input type="password" id="pwd" placeholder="Passwort..." style="width:100%; padding:12px; box-sizing:border-box; margin-bottom: 10px; background: #222; color: #fff; border: 1px solid #e30613;">
- <button onclick="window.ui.login()">Login</button>
-</div>
-
-<div id="eventModal">
- <h3 id="modalHeadline" style="font-family:'Orbitron'; color:#e30613;">Event</h3>
- <div class="modal-grid">
-  <label>Titel</label><input id="e_title">
-  <label>Datum</label><input id="e_date" type="date">
-  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-    <div><label>Start</label><input id="e_start" type="time"></div>
-    <div><label>Ende</label><input id="e_end" type="time"></div>
-  </div>
-  <label>Strecke</label><input id="e_track">
-  <label>Auto</label><input id="e_vehicle">
-  <label>Fahrer</label><select id="e_drivers" multiple></select>
-  <label>Stream</label><input id="e_stream">
-  <label>Status</label>
-  <select id="e_status">
-   <option value="ok">Findet statt</option>
-   <option value="unclear">Unklar</option>
-   <option value="cancelled">Entfällt</option>
-  </select>
- </div>
- <button onclick="window.ui.saveEvent()" style="margin-top:15px;">Speichern</button>
- <button id="deleteBtn" onclick="window.ui.deleteEvent()" style="background:#b30000; color:#fff; display:none;">Löschen</button>
- <button onclick="window.ui.closeAll()" style="background:#444; color:#fff;">Abbrechen</button>
-</div>
-
-<div id="noteModal">
-    <h3 style="font-family:'Orbitron'; color:#e30613; margin:0;">📝 Event Notizen</h3>
-    <textarea id="e_notes" placeholder="Hier kannst du Notizen zum Rennen eintragen..."></textarea>
-    <button id="saveNoteBtn" onclick="window.ui.saveNote()" style="margin-top:10px;">Speichern</button>
-    <button onclick="window.ui.closeAll()" style="background:#444; margin-top:5px;">Schließen</button>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-(function() {
-    const db = supabase.createClient("https://hbuppukuizrnzrhwvfou.supabase.co","sb_publishable_atazSTKWDQ5VMKQqHxO0BA_GoPQzPDX");
+document.addEventListener("DOMContentLoaded", function() {
+    // --- HIER ZIELZEIT EINSTELLEN ---
+    // Format: "YYYY-MM-DDTHH:MM:SS" (Passend zu deinem Text eingestellt)
+    const TARGET_DATE = new Date("2026-06-22T15:30:00").getTime();
 
-    let teams=[], events=[], drivers=[], currentTeam=null, selectedDriver=null, selectedMonth="all", editId=null;
-    let isAdmin=false, isRealAdmin=false, isViewer=false, activeNoteId=null;
-    let sessionPassword = "";
-    let currentPoll = null;
-    let systemStatus = null; // Speichert den Live-Wartungsstatus
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const difference = TARGET_DATE - now;
 
-    async function init(){
-        // === ECHTER WARTUNGSMODUS LISTENER (Start) ===
-        try {
-            const { data: statusData } = await db.from('system_status').select('*').eq('id', 1).single();
-            if (statusData) {
-                systemStatus = statusData; // Speichern für die Render-Funktionen
-                
-                // Globale Wartung: Blockiert die komplette Seite
-                if (statusData.maintenance_mode) {
-                    document.body.innerHTML = `<div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#030303; color:#e30613; font-family:'Orbitron', sans-serif; text-align:center; padding:20px;"><div><h1>⚠️ SYSTEM OFFLINE</h1><p>${statusData.maintenance_message || 'Komplette Wartungsarbeiten. Wir sind gleich zurück.'}</p></div></div>`;
-                    return; // Stoppt das weitere Laden der Website komplett!
-                }
-            }
-
-            // Live-Überwachung: Schlägt in Millisekunden zu, wenn du im NOC Dashboard klickst!
-            db.channel('system-status-channel')
-              .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'system_status', filter: 'id=eq.1' }, payload => {
-                  location.reload(); // Lädt die Seite bei jeder Änderung des Status (Global oder Einzeln) sofort neu!
-              }).subscribe();
-        } catch (e) {
-            console.error("Wartungsmodus-Check fehlgeschlagen:", e);
-        }
-        // === ECHTER WARTUNGSMODUS LISTENER (Ende) ===
-
-        await loadTeams();
-        await loadActivePoll();
-        document.getElementById("monthFilter").onchange=(e)=>{selectedMonth=e.target.value; renderEvents();};
-        setInterval(updateCountdownsOnly, 1000); 
-    }
-
-    async function loadTeams(){ 
-        const {data}=await db.from('teams').select('name, logo, discord_webhook'); 
-        teams=data||[]; 
-        renderTeams(); 
-    }
-
-    async function loadActivePoll() {
-        try {
-            const now = new Date().toISOString();
-            const { data } = await db.from('polls')
-                .select('*')
-                .gt('expires_at', now)
-                .order('expires_at', { ascending: true })
-                .limit(1);
-
-            if (data && data.length > 0) {
-                currentPoll = data[0];
-                renderPoll();
-            }
-        } catch (e) { console.log("Keine Umfrage aktiv."); }
-    }
-
-    function renderPoll() {
-        const container = document.getElementById("poll-container");
-        const qDiv = document.getElementById("poll-question");
-        const oDiv = document.getElementById("poll-options");
-        const tDiv = document.getElementById("poll-timer");
-        const vDiv = document.getElementById("poll-votes-count");
-
-        if(!container || !currentPoll) return;
-
-        container.style.display = "block";
-        qDiv.innerText = currentPoll.question;
-        oDiv.innerHTML = "";
-        
-        const hasVoted = localStorage.getItem(`voted_poll_${currentPoll.id}`);
-        const totalVotes = Object.values(currentPoll.options).reduce((a, b) => a + b, 0);
-
-        for (const [option, count] of Object.entries(currentPoll.options)) {
-            if (!hasVoted) {
-                const btn = document.createElement("div");
-                btn.className = "poll-opt-btn";
-                btn.innerText = option;
-                btn.onclick = () => castVote(option);
-                oDiv.appendChild(btn);
-            } else {
-                const percent = totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 0;
-                oDiv.innerHTML += `
-                    <div style="font-size:12px; margin-top:8px; display:flex; justify-content:space-between;">
-                        <span>${option}</span>
-                        <span style="color:#ffd700; font-weight:bold;">${percent}%</span>
-                    </div>
-                    <div class="poll-bar-bg"><div class="poll-bar-fill" style="width:${percent}%"></div></div>
-                `;
-            }
-        }
-        
-        vDiv.innerText = `Stimmen: ${totalVotes}`;
-        tDiv.innerText = "Endet am: " + new Date(currentPoll.expires_at).toLocaleString();
-    }
-
-    async function castVote(option) {
-        if (!currentPoll) return;
-        currentPoll.options[option] += 1;
-        const { error } = await db.from('polls').update({ options: currentPoll.options }).eq('id', currentPoll.id);
-        if (!error) {
-            localStorage.setItem(`voted_poll_${currentPoll.id}`, "true");
-            renderPoll();
-        }
-    }
-
-    function renderTeams(){
-        const c=document.getElementById("teamSelection"); c.innerHTML="";
-        
-        // INDIVIDUELLE WARTUNG: Teams
-        if(systemStatus && systemStatus.maint_teams) {
-            c.innerHTML = "<div style='grid-column: 1 / -1; text-align:center; color:#e30613; font-family:Orbitron; padding:20px; background:#151515; border:1px solid #e30613; border-radius:10px;'>⚠️ Die Teamauswahl befindet sich aktuell im Wartungsmodus.</div>";
+        if (difference <= 0) {
+            clearInterval(timerInterval);
+            document.getElementById("countdownBox").style.display = "none";
+            document.getElementById("finishedText").style.display = "block";
+            
+            // Optionaler automatischer Reload, wenn der Timer abgelaufen ist
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
             return;
         }
 
-        teams.forEach(t=>{
-            let logoURL=null;
-            // INDIVIDUELLE WARTUNG: CDN (Logos blockieren, Platzhalter anzeigen)
-            if(t.logo && !(systemStatus && systemStatus.maint_cdn)){ 
-                const {data}=db.storage.from('team-logos').getPublicUrl(t.logo); 
-                logoURL=data.publicUrl; 
-            }
-            
-            const div=document.createElement("div"); div.className="team-card";
-            div.innerHTML=`${logoURL ? `<img src="${logoURL}">` : `<div style="width:80px;height:80px;margin-bottom:10px;background:#222;border-radius:8px;border:2px dashed #e30613;display:flex;align-items:center;justify-content:center;font-size:10px;color:#e30613;">NO CDN</div>`}<div class="team-name">${t.name}</div>`;
-            div.onclick=()=>openLogin(t); c.appendChild(div);
-        });
+        // Zeitberechnungen für Tage, Stunden, Minuten und Sekunden
+        const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+        // Werte in HTML schreiben (mit führender Null)
+        document.getElementById("days").innerText = String(d).padStart(2, '0');
+        document.getElementById("hours").innerText = String(h).padStart(2, '0');
+        document.getElementById("minutes").innerText = String(m).padStart(2, '0');
+        document.getElementById("seconds").innerText = String(s).padStart(2, '0');
     }
 
-    async function login(){
-        const inputPwd = document.getElementById("pwd").value;
-        const { data, error } = await db.rpc('check_team_access', { input_team_name: currentTeam.name, input_password: inputPwd });
-        
-        if (data && data.length > 0 && data[0].access_granted) {
-            sessionPassword = inputPwd;
-            isAdmin = data[0].is_admin || data[0].is_real_admin; 
-            isRealAdmin = data[0].is_real_admin; 
-            isViewer = data[0].is_viewer; 
-            await loadData(); 
-            completeLogin();
-        } else { 
-            alert("Passwort falsch!"); 
-        }
-    }
-
-    async function verifyAction() {
-        const { data } = await db.rpc('check_team_access', { input_team_name: currentTeam.name, input_password: sessionPassword });
-        if (!data || !data[0] || !data[0].access_granted || (!data[0].is_admin && !data[0].is_real_admin)) {
-            alert("Sicherheits-Check fehlgeschlagen! Keine Berechtigung.");
-            return false;
-        }
-        return true;
-    }
-
-    async function loadData() {
-        const [ev, dr, tm] = await Promise.all([
-            db.from('events').select('*').eq('team', currentTeam.name),
-            db.from('drivers').select('*').eq('team', currentTeam.name).order('name', { ascending: true }),
-            db.from('teams').select('discord_webhook').eq('name', currentTeam.name).single()
-        ]);
-        events = ev.data || [];
-        drivers = dr.data || [];
-        if (tm.data) {
-            currentTeam.discord_webhook = tm.data.discord_webhook;
-        }
-    }
-
-    function openLogin(t){ currentTeam=t; document.getElementById("pwdTitle").innerText=t.name; document.getElementById("pwdModal").style.display="block"; document.getElementById("overlay").style.display="block"; }
-
-    function completeLogin() {
-        closeAll();
-        document.getElementById("start-container").style.display="none";
-        document.querySelector(".main-wrapper").style.display="block";
-        document.getElementById("hamburger").style.display="block";
-        document.getElementById("teamTitle").innerText=currentTeam.name + (isViewer ? " (Besucher)" : "");
-        document.getElementById("adminDriverSection").style.display = isRealAdmin ? "block" : "none";
-        document.getElementById("addEventBtn").style.display = isAdmin ? "inline-block" : "none";
-        
-        const webSection = document.getElementById("adminWebhookSection");
-        if(webSection) {
-            webSection.style.display = isRealAdmin ? "block" : "none";
-            document.getElementById("teamWebhookUrl").value = currentTeam.discord_webhook || "";
-        }
-
-        renderEvents(); 
-        renderDrivers(); 
-        updateDriverDropdown();
-    }
-
-    function back(){ location.reload(); }
-
-    function getCountdown(targetDate) {
-        const now = new Date().getTime(); const diff = targetDate - now;
-        if (diff <= 0) return null;
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((diff % (1000 * 60)) / 1000);
-        return (d > 0 ? d + "d " : "") + h + "h " + m + "m " + s + "s";
-    }
-
-    function updateCountdownsOnly() {
-        events.forEach(e => {
-            const el = document.getElementById(`cd-${e.id}`);
-            if (!el) return;
-            const now = new Date();
-            const start = new Date(e.date + " " + e.start);
-            const end = new Date(e.date + " " + e.end);
-            const isLive = now >= start && now <= end;
-            const isPast = now > end;
-
-            if (isPast || e.status === "cancelled") {
-                el.innerText = "";
-            } else if (isLive) {
-                el.innerText = "Endet in: " + getCountdown(end);
-            } else {
-                el.innerText = "Startet in: " + getCountdown(start);
-            }
-        });
-    }
-
-    function formatDriverName(name) {
-        if (!name) return "";
-        const adminTags = ["| Admin", "| Owner", "| Teamchef"];
-        let isOwner = adminTags.some(tag => name.includes(tag));
-        let cleanName = name;
-        adminTags.forEach(tag => cleanName = cleanName.replace(tag, ""));
-        return cleanName.trim() + (isOwner ? '<span class="badge-owner">👑</span>' : '');
-    }
-
-    function renderEvents(){
-        const c=document.getElementById("calendar"); if(!c) return; c.innerHTML="";
-        
-        // INDIVIDUELLE WARTUNG: Events (Kalender ausblenden)
-        if(systemStatus && systemStatus.maint_events) {
-            c.innerHTML = "<div style='text-align:center; color:#e30613; font-family:Orbitron; padding:20px; background:#151515; border:1px solid #e30613; border-radius:10px;'>⚠️ Der Rennkalender befindet sich aktuell im Wartungsmodus.</div>";
-            return;
-        }
-
-        events.filter(e=>{
-            if(selectedDriver && !(e.drivers||"").includes(selectedDriver)) return false;
-            if(selectedMonth!=="all"){ const d=new Date(e.date); if(d.getMonth()!=selectedMonth) return false; }
-            return true;
-        }).sort((a,b) => new Date(a.date+" "+a.start) - new Date(b.date+" "+b.end)).forEach(e=>{
-            const now=new Date(); const start=new Date(e.date+" "+e.start); const end=new Date(e.date+" "+e.end);
-            const isLive = now >= start && now <= end; const isPast = now > end;
-            let label = e.status === "cancelled" ? "ENTFÄLLT" : (isLive ? "LIVE" : (isPast ? "Beendet" : (e.status === "ok" ? "Findet statt" : "Unklar")));
-            let badgeClass = e.status === "cancelled" ? "status-cancelled" : (isLive ? "status-live" : (isPast ? "status-past" : (e.status === "ok" ? "status-ok" : "status-unclear")));
-            const div = document.createElement("div"); div.className = `event ${isLive ? 'live' : ''} ${isPast ? 'past' : ''} ${e.status==='cancelled' ? 'cancelled' : ''}`;
-            
-            div.onclick = (event) => {
-                if(isAdmin && !event.target.closest('.note-btn') && !event.target.closest('.stream-link')) {
-                    openEventModal(e);
-                }
-            };
-            
-            const driverDisplay = (e.drivers || "").split(", ").map(formatDriverName).join(", ");
-
-            div.innerHTML = `
-                <div class="event-title">${e.title}</div>
-                <div id="cd-${e.id}" class="countdown-text"></div>
-                <div class="event-row"><span class="status-badge ${badgeClass}">${label}</span></div>
-                <div class="event-row">📅 Datum: ${e.date}</div>
-                <div class="event-row">🕒 Uhrzeit: ${e.start} - ${e.end}</div>
-                <div class="event-row">📍 Strecke: ${e.track}</div>
-                <div class="event-row">🏎️ Fahrzeug: ${e.vehicle}</div>
-                <div class="event-row">👥 Fahrer: ${driverDisplay}</div>
-                <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-                    <button class="note-btn" onclick="window.ui.openNoteModal(event, '${e.id}')">📝 Notizen</button>
-                    ${e.stream ? `<a href="${e.stream}" target="_blank" class="stream-link" onclick="event.stopPropagation()">📺 Zum Stream</a>` : ""}
-                </div>
-            `;
-            c.appendChild(div);
-        });
-        updateCountdownsOnly();
-    }
-
-    function openNoteModal(ev, id) {
-        if(ev) { ev.stopPropagation(); ev.preventDefault(); }
-        activeNoteId = id;
-        const eventObj = events.find(e => String(e.id) === String(id));
-        const textarea = document.getElementById("e_notes");
-        textarea.value = eventObj ? (eventObj.notes || "") : "";
-        textarea.disabled = !isAdmin;
-        document.getElementById("saveNoteBtn").style.display = isAdmin ? "block" : "none";
-        document.getElementById("noteModal").style.display="block";
-        document.getElementById("overlay").style.display="block";
-    }
-
-    async function saveNote(){
-        if(!isAdmin) return;
-        if(!(await verifyAction())) return;
-        const noteText = document.getElementById("e_notes").value;
-        const { error } = await db.from('events').update({ notes: noteText }).eq('id', activeNoteId);
-        if(error) alert("Fehler beim Speichern!");
-        closeAll(); await loadData(); renderEvents();
-    }
-
-    function renderDrivers(){
-        const c=document.getElementById("driverList"); if(!c) return; c.innerHTML="";
-        
-        // INDIVIDUELLE WARTUNG: Fahrer (Liste ausblenden)
-        if(systemStatus && systemStatus.maint_drivers) {
-            c.innerHTML = "<div style='text-align:center; color:#e30613; font-family:Orbitron; padding:10px; background:#1a1a1a; border-radius:5px; font-size:12px;'>⚠️ Fahrerliste offline (Wartung)</div>";
-            return;
-        }
-
-        drivers.forEach(d=>{
-            const div = document.createElement("div"); div.className = `driver-container`;
-            div.innerHTML = `
-                <div class="driver ${selectedDriver === d.name ? 'active' : ''}" onclick="window.ui.selectDriver('${d.name}')">${formatDriverName(d.name)}</div>
-                ${isRealAdmin ? `<button class="delete-driver-btn" onclick="window.ui.deleteDriver('${d.id}')">X</button>` : ""}
-            `;
-            c.appendChild(div);
-        });
-    }
-
-    async function addDriver(){
-        const name=document.getElementById("newDriverName").value;
-        if(!name || !(await verifyAction())) return;
-        await db.from('drivers').insert({name, team: currentTeam.name});
-        document.getElementById("newDriverName").value=""; await loadData(); renderDrivers(); updateDriverDropdown();
-    }
-
-    async function deleteDriver(id){
-        if(!confirm("Fahrer wirklich löschen?") || !(await verifyAction())) return;
-        await db.from('drivers').delete().eq('id', id);
-        await loadData(); renderDrivers(); updateDriverDropdown();
-    }
-
-    async function saveWebhook() {
-        if(!isRealAdmin || !(await verifyAction())) return;
-        const url = document.getElementById("teamWebhookUrl").value;
-        const { error } = await db.from('teams').update({ discord_webhook: url }).eq('name', currentTeam.name);
-        if(error) {
-            alert("Fehler beim Speichern des Webhooks!");
-        } else {
-            currentTeam.discord_webhook = url;
-            alert("Discord-Webhook erfolgreich aktualisiert!");
-        }
-    }
-
-    function closeAll(){ 
-        document.getElementById("overlay").style.display="none"; 
-        document.getElementById("pwdModal").style.display="none"; 
-        document.getElementById("eventModal").style.display="none"; 
-        document.getElementById("noteModal").style.display="none";
-        document.getElementById("sideMenu").classList.remove("open"); 
-    }
-
-    function openEventModal(eventObj = null) {
-        if(!isAdmin) return;
-        if(eventObj && eventObj.id) {
-            editId = eventObj.id; document.getElementById("modalHeadline").innerText = "Bearbeiten";
-            document.getElementById("e_title").value = eventObj.title; document.getElementById("e_date").value = eventObj.date;
-            document.getElementById("e_start").value = eventObj.start; document.getElementById("e_end").value = eventObj.end;
-            document.getElementById("e_track").value = eventObj.track; document.getElementById("e_vehicle").value = eventObj.vehicle;
-            document.getElementById("e_stream").value = eventObj.stream; document.getElementById("e_status").value = eventObj.status;
-            const sel = document.getElementById("e_drivers");
-            const activeDr = (eventObj.drivers || "").split(", ");
-            Array.from(sel.options).forEach(o => o.selected = activeDr.includes(o.value));
-            document.getElementById("deleteBtn").style.display = "block";
-        } else {
-            editId = null; document.getElementById("modalHeadline").innerText = "Neues Event";
-            document.querySelectorAll("#eventModal input").forEach(i => i.value = "");
-            document.getElementById("e_status").value = "ok";
-            document.getElementById("deleteBtn").style.display = "none";
-        }
-        document.getElementById("eventModal").style.display="block"; document.getElementById("overlay").style.display="block";
-    }
-
-    async function sendDiscordNotification(eventData, isNew) {
-        if (!currentTeam || !currentTeam.discord_webhook) return;
-        
-        let statusLabel = "Findet statt";
-        if (eventData.status === "unclear") statusLabel = "Unklar";
-        if (eventData.status === "cancelled") statusLabel = "Entfällt";
-
-        const titlePrefix = isNew ? "🆕 Neuer Termin erstellt!" : "🔄 Termin aktualisiert!";
-        const embedColor = eventData.status === "cancelled" ? 11730944 : (isNew ? 1931776 : 14878227); // Rot / Grün / Orange
-
-        const payload = {
-            embeds: [{
-                title: `${titlePrefix} - ${eventData.title}`,
-                color: embedColor,
-                fields: [
-                    { name: "📅 Datum", value: eventData.date || "-", inline: true },
-                    { name: "🕒 Uhrzeit", value: `${eventData.start || "-"} - ${eventData.end || "-"}`, inline: true },
-                    { name: "📍 Strecke", value: eventData.track || "-", inline: true },
-                    { name: "🏎️ Fahrzeug", value: eventData.vehicle || "-", inline: true },
-                    { name: "👥 Fahrer", value: eventData.drivers || "Keine angegeben", inline: true },
-                    { name: "📢 Status", value: statusLabel, inline: true }
-                ],
-                footer: { text: `Team: ${currentTeam.name}` },
-                timestamp: new Date().toISOString()
-            }]
-        };
-
-        if (eventData.stream) {
-            payload.embeds[0].fields.push({ name: "📺 Stream", value: `[Zum Stream](${eventData.stream})`, inline: false });
-        }
-
-        try {
-            await fetch(currentTeam.discord_webhook, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
-        } catch (e) {
-            console.error("Fehler beim Senden an Discord Webhook:", e);
-        }
-    }
-
-    async function saveEvent(){
-        if(!isAdmin || !(await verifyAction())) return;
-        const sel = document.getElementById("e_drivers");
-        const selectedDr = Array.from(sel.selectedOptions).map(o => o.value).join(", ");
-        const eventData = {
-            title: document.getElementById("e_title").value, date: document.getElementById("e_date").value,
-            start: document.getElementById("e_start").value, end: document.getElementById("e_end").value,
-            track: document.getElementById("e_track").value, vehicle: document.getElementById("e_vehicle").value,
-            drivers: selectedDr, stream: document.getElementById("e_stream").value, 
-            status: document.getElementById("e_status").value, team: currentTeam.name
-        };
-        
-        const isNew = !editId;
-        if(editId) await db.from('events').update(eventData).eq('id', editId);
-        else await db.from('events').insert(eventData);
-        
-        // Sende die Discord-Benachrichtigung ab
-        await sendDiscordNotification(eventData, isNew);
-        
-        closeAll(); await loadData(); renderEvents();
-    }
-
-    async function deleteEvent() {
-        if(!isAdmin || !editId || !confirm("Löschen?") || !(await verifyAction())) return;
-        await db.from('events').delete().eq('id', editId);
-        closeAll(); await loadData(); renderEvents();
-    }
-
-    function updateDriverDropdown() {
-        const select = document.getElementById("e_drivers"); if(!select) return; select.innerHTML = "";
-        drivers.forEach(d => {
-            const opt = document.createElement("option"); opt.value = d.name; opt.innerText = d.name.replace("| Admin", "").replace("| Owner", "").replace("| Teamchef", "").trim(); 
-            select.appendChild(opt);
-        });
-    }
-
-    window.ui = {
-        login,
-        toggleMenu: () => document.getElementById("sideMenu").classList.toggle("open"),
-        closeAll,
-        back,
-        openEventModal,
-        saveEvent,
-        deleteEvent,
-        openNoteModal,
-        saveNote,
-        addDriver,
-        deleteDriver,
-        saveWebhook,
-        selectDriver: (name) => { selectedDriver = (selectedDriver === name) ? null : name; renderDrivers(); renderEvents(); },
-        resetDriverFilter: () => { selectedDriver=null; renderDrivers(); renderEvents(); }
-    };
-
-    window.onload = init;
-})();
+    // Timer sofort einmal ausführen und dann jede Sekunde triggern
+    updateCountdown();
+    const timerInterval = setInterval(updateCountdown, 1000);
+});
 </script>
 </body>
 </html>
